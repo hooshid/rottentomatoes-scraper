@@ -16,6 +16,7 @@ see example folder
 ## Todo
 * add tests
 * bug fixes
+* error monitor
 
 ## License
 The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
