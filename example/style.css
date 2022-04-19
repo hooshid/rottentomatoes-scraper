@@ -1,0 +1,394 @@
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    outline: 0;
+    border: 0;
+}
+
+body {
+    background-color: rgb(243, 244, 246);
+    font-family: sans-serif;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+html {
+    box-sizing: border-box;
+    -webkit-font-smoothing: antialiased;
+}
+
+table {
+    width: 100%;
+}
+
+th,
+td {
+    padding: 8px 14px;
+    text-align: left;
+    border-bottom: 1px solid #E1E1E1;
+    vertical-align: top;
+}
+
+th:first-child,
+td:first-child {
+    padding-left: 0;
+}
+
+th:last-child,
+td:last-child {
+    padding-right: 0;
+}
+
+.container {
+    position: relative;
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 20px;
+    box-sizing: border-box;
+}
+
+/* Clear floats after the columns */
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+.text-left {
+    text-align: left;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.text-right {
+    text-align: right;
+}
+
+.text-justify {
+    text-align: justify;
+}
+
+.boxed {
+    width: 100%;
+    padding: 20px;
+    box-shadow: #dcdcdc 0 2px 8px;
+    background: #fff;
+    border-radius: 5px;
+    margin: 50px auto;
+}
+
+:root {
+    --input-color: #383838;
+    --input-border: #b3b3b3;
+    --input-background: #fff;
+    --input-placeholder: #cbd1dc;
+    --input-border-focus: #275efe;
+    --group-color: var(--input-color);
+    --group-border: var(--input-border);
+    --group-background: #ececec;
+    --group-color-focus: #fff;
+    --group-border-focus: var(--input-border-focus);
+    --group-background-focus: #678efe;
+}
+
+.form-field {
+    display: block;
+    width: 100%;
+    padding: 8px 16px;
+    line-height: 25px;
+    font-size: 14px;
+    font-weight: 500;
+    border-radius: 6px;
+    color: var(--input-color);
+    border: 1px solid var(--input-border);
+    background: var(--input-background);
+    transition: border 0.3s ease;
+}
+
+.form-field::-moz-placeholder {
+    color: var(--input-placeholder);
+}
+
+.form-field:-ms-input-placeholder {
+    color: var(--input-placeholder);
+}
+
+.form-field::placeholder {
+    color: var(--input-placeholder);
+}
+
+.form-field:focus {
+    outline: none;
+    border-color: var(--input-border-focus);
+}
+
+.form-group {
+    position: relative;
+    display: flex;
+    width: 100%;
+}
+
+.form-group > label,
+.form-group .form-field {
+    white-space: nowrap;
+    display: block;
+}
+
+.form-group > label:not(:first-child):not(:last-child),
+.form-group .form-field:not(:first-child):not(:last-child) {
+    border-radius: 0;
+}
+
+.form-group > label:first-child,
+.form-group .form-field:first-child {
+    border-radius: 6px 0 0 6px;
+}
+
+.form-group > label:last-child,
+.form-group .form-field:last-child {
+    border-radius: 0 6px 6px 0;
+}
+
+.form-group > label:not(:first-child),
+.form-group .form-field:not(:first-child) {
+    margin-left: -1px;
+}
+
+.form-group .form-field {
+    position: relative;
+    z-index: 1;
+    flex: 1 1 auto;
+    width: 1%;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.form-group > label {
+    text-align: center;
+    padding: 8px 12px;
+    font-size: 14px;
+    line-height: 25px;
+    color: var(--group-color);
+    background: var(--group-background);
+    border: 1px solid var(--group-border);
+    transition: background 0.3s ease, border 0.3s ease, color 0.3s ease;
+}
+
+.form-group:focus-within > label {
+    color: var(--group-color-focus);
+    background: var(--group-background-focus);
+    border-color: var(--group-border-focus);
+}
+
+.form-group:not(:last-child) {
+    margin-bottom: 32px;
+}
+
+input[type=submit] {
+    background-color: #4CAF50;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    float: right;
+    margin-top: 6px;
+}
+
+input[type=submit]:hover {
+    background-color: #45a049;
+}
+
+.pb-30 {
+    padding-bottom: 30px;
+}
+
+.flex-container {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.flex-container .col-75 {
+    flex: 75%;
+}
+
+.flex-container .col-25 {
+    flex: 25%;
+}
+
+h2 {
+    font-size: 40px;
+}
+
+.back-page,
+.output-json-link {
+    position: fixed;
+    padding: 5px 13px;
+    background: #678efe;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 0 30px 30px 0;
+    text-align: center;
+    left: 0;
+    top: 5px;
+}
+
+.back-page:hover,
+.output-json-link:hover{
+    color: #fff;
+    background: #275efe;
+}
+
+.output-json-link {
+    border-radius: 30px 0 0 30px;
+    right: 0;
+    left: auto;
+    top: 5px;
+}
+
+.menu-links a {
+    display: block;
+    padding: 6px;
+    color: #444;
+    text-decoration: none;
+}
+
+.menu-links a:hover {
+    color: #4CAF50;
+}
+
+.menu-links-title {
+    color: #444;
+    padding: 8px 0;
+    font-weight: bold;
+    margin-top: 5px;
+}
+
+.meta-link a {
+    font-size: 10px;
+    color: #999;
+    font-weight: 500;
+}
+
+.search_results.module {
+    padding-bottom: 20px;
+}
+
+ol, ul {
+    list-style: none;
+}
+
+.result {
+    padding: 15px 0;
+    border-top: 1px solid #DDD;
+    min-height: 150px;
+}
+
+.result .result_thumbnail {
+    float: left;
+    min-height: 150px;
+    min-width: 96px;
+    position: relative;
+}
+
+.metascore_w {
+    vertical-align: middle;
+    text-align: center;
+    color: #fff !important;
+    font-family: Arial, Helvetica, sans-serif;
+    font-style: normal !important;
+    font-weight: bold !important;
+    background-color: transparent;
+    height: 2em;
+    width: 2em;
+    line-height: 2em;
+    font-size: 17px;
+    border-radius: 6px;
+}
+
+span.metascore_w, a.metascore_w {
+    display: inline-block;
+}
+
+.result .metascore_w {
+    float: right;
+    position: relative;
+    top: 0;
+}
+
+.metascore_w.positive, .metascore_w.good, .metascore_w.sixtyone, .metascore_w.game.seventyfive, .metascore_w.score_favorable, .metascore_w.score_outstanding {
+    background-color: #6c3;
+}
+
+.metascore_w.tbd, .metascore_w.score_tbd {
+    color: #FFF !important;
+    background-color: #ccc;
+    text-transform: lowercase;
+}
+
+.metascore_w.mixed, .metascore_w.forty, .metascore_w.game.fifty, .metascore_w.score_mixed {
+    background-color: #fc3;
+}
+
+.metascore_w.negative, .metascore_w.bad, .metascore_w.score_terrible, .metascore_w.score_unfavorable {
+    background-color: #f00;
+}
+
+.result .result_thumbnail img {
+    width: 78px;
+    margin-right: 20px;
+}
+
+.must-see {
+    display: block;
+    float: right;
+    width: 35px;
+    height: 35px;
+    margin: 0 10px 0 0;
+}
+
+.basic_stats .product_title {
+    font-weight: bold;
+    font-size: 16px;
+    color: #424242;
+    margin-bottom: 5px;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+.basic_stats p {
+    font-size: 12px;
+    color: #999;
+    margin-bottom: 10px;
+}
+
+.result .deck {
+    font-size: 14px;
+    line-height: 1.75em;
+    color: #424242;
+}
+
+.metascore_w.user {
+    border-radius: 55%;
+    color: #fff;
+    height: 2em;
+    width: 2em;
+    line-height: 2em;
+}
+
+.metascore_w ~ .metascore_w.user {
+    margin: 0 10px 0 0;
+}
