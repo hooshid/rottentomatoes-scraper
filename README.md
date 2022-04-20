@@ -14,9 +14,8 @@ $ composer require hooshid/rottentomatoes-scraper
 see example folder
 
 ## Todo
-* add tests
-* bug fixes
-* error monitor
+* add more tests
+* add home list scraper
 
 ## License
 The MIT License (MIT). Please see [License File](LICENSE.md) for more information.

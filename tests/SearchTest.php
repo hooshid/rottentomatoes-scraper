@@ -18,7 +18,7 @@ class SearchTest extends TestCase
         $this->assertEquals('https://resizing.flixster.com/8EcyD7FNd2NtugzJT1Ggvu45-kA=/fit-in/80x126/v2/https://flxt.tmsimg.com/NowShowing/177947/177947_ac.jpg', $result['result'][0]['thumbnail']);
         $this->assertEquals('movie', $result['result'][0]['type']);
         $this->assertEquals('Spider-Man: Far From Home', $result['result'][0]['title']);
-        $this->assertEquals('2019', $result['result'][0]['year']);
+        $this->assertEquals(2019, $result['result'][0]['year']);
         $this->assertGreaterThan(85, $result['result'][0]['score']);
         $this->assertGreaterThan(85, $result['result'][0]['user_score']);
     }
@@ -36,9 +36,9 @@ class SearchTest extends TestCase
         $this->assertEquals('https://resizing.flixster.com/bwl5UJxKDu79g3IGf_1og3e8SYw=/fit-in/80x126/v2/https://flxt.tmsimg.com/assets/p8553063_b_v13_ax.jpg', $result['result'][0]['thumbnail']);
         $this->assertEquals('tv', $result['result'][0]['type']);
         $this->assertEquals('Game of Thrones', $result['result'][0]['title']);
-        $this->assertEquals('2011', $result['result'][0]['year']);
-        $this->assertEquals('2011', $result['result'][0]['startYear']);
-        $this->assertEquals('2019', $result['result'][0]['endYear']);
+        $this->assertEquals(2011, $result['result'][0]['year']);
+        $this->assertEquals(2011, $result['result'][0]['startYear']);
+        $this->assertEquals(2019, $result['result'][0]['endYear']);
         $this->assertGreaterThan(85, $result['result'][0]['score']);
         $this->assertNull($result['result'][0]['user_score']);
     }

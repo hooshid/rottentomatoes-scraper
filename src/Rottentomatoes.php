@@ -36,7 +36,7 @@ class Rottentomatoes extends Base
                 $output[$i]['thumbnail'] = $e->imageUrl;
                 $output[$i]['type'] = 'movie';
                 $output[$i]['title'] = $this->cleanString($e->name);
-                $output[$i]['year'] = $e->releaseYear;
+                $output[$i]['year'] = isset($e->releaseYear) ? (int)$e->releaseYear : null;
                 $output[$i]['score'] = @$e->criticsScore->value;
                 $output[$i]['user_score'] = @($e->audienceScore->score) ? (int)$e->audienceScore->score : null;
                 $i++;
@@ -49,9 +49,9 @@ class Rottentomatoes extends Base
                 $output[$i]['thumbnail'] = $e->imageUrl;
                 $output[$i]['type'] = 'tv';
                 $output[$i]['title'] = $this->cleanString($e->name);
-                $output[$i]['year'] = $e->startYear;
-                $output[$i]['startYear'] = $e->startYear;
-                $output[$i]['endYear'] = $e->endYear;
+                $output[$i]['year'] = isset($e->startYear) ? (int)$e->startYear : null;
+                $output[$i]['startYear'] = isset($e->startYear) ? (int)$e->startYear : null;
+                $output[$i]['endYear'] = isset($e->endYear) ? (int)$e->endYear : null;
                 $output[$i]['score'] = @$e->criticsScore->value;
                 $output[$i]['user_score'] = @($e->audienceScore->score) ? (int)$e->audienceScore->score : null;
                 $i++;
@@ -71,6 +71,7 @@ class Rottentomatoes extends Base
      */
     public function extract($url): array
     {
+        $url = str_replace("/movie/", "/m/", $url);
         $response = $this->getContentPage($this->baseUrl . $url);
         $type = "movie";
         if (stripos($url, "/m/") === false) {

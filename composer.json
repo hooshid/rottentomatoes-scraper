@@ -1,6 +1,6 @@
 {
     "name": "hooshid/rottentomatoes-scraper",
-    "description": "Library for retrieving movie, tv, person information from rottentomatoes.com",
+    "description": "Library for retrieving movie, tv information from rottentomatoes.com",
     "keywords": [
         "php",
         "rottentomatoes",
