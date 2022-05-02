@@ -22,6 +22,8 @@ class ExtractTest extends TestCase
 
         $this->assertGreaterThan(80, $result['result']['user_score']);
         $this->assertGreaterThan(33324200, $result['result']['user_votes']);
+
+        $this->assertNull($result['error']);
     }
 
     public function testExtractTV()
@@ -41,5 +43,17 @@ class ExtractTest extends TestCase
 
         $this->assertGreaterThan(95, $result['result']['user_score']);
         $this->assertEquals(0, $result['result']['user_votes']);
+
+        $this->assertNull($result['error']);
+    }
+
+    public function testExtractNotFound()
+    {
+        $search = new Rottentomatoes();
+        $result = $search->extract('/m/page_not_found');
+
+        $this->assertIsArray($result);
+        $this->assertEmpty($result['result']);
+        $this->assertEquals(404, $result['error']);
     }
 }

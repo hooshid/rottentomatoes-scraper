@@ -56,7 +56,9 @@ class Base
      */
     protected function jsonLD($html)
     {
+        if(empty($html)) return [];
         preg_match('#<script type="application/ld\+json">(.+?)</script>#ims', $html, $matches);
+        if(empty($matches[1])) return [];
         return json_decode($matches[1]);
     }
 
@@ -67,7 +69,7 @@ class Base
      * @param string $needle
      * @return string
      */
-    protected function afterLast($str, $needle = '/'): string
+    protected function afterLast($str, string $needle = '/'): string
     {
         return substr($str, strrpos($str, $needle) + 1);
     }

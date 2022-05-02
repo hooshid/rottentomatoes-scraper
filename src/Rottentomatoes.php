@@ -73,39 +73,44 @@ class Rottentomatoes extends Base
     {
         $url = str_replace("/movie/", "/m/", $url);
         $response = $this->getContentPage($this->baseUrl . $url);
+        $html = HtmlDomParser::str_get_html($response);
         $type = "movie";
         if (stripos($url, "/m/") === false) {
             $type = "tv";
         }
 
-        $obj = $this->jsonLD($response);
+        $error = ($html->find('h1',0)->innerText() == "404 - Not Found") ? 404 : null;
+
         $output = [];
-        $output['title'] = $obj->name;
-        $output['full_url'] = $obj->url;
-        if (stripos($obj->url, "https://") === false) {
-            $output['full_url'] = $this->baseUrl . $obj->url;
+        if (empty($error)) {
+            $obj = $this->jsonLD($response);
+            $output['title'] = $obj->name;
+            $output['full_url'] = $obj->url;
+            if (stripos($obj->url, "https://") === false) {
+                $output['full_url'] = $this->baseUrl . $obj->url;
+            }
+            $output['type'] = $type;
+
+            $output['thumbnail'] = $html->find('.posterImage', 0)->getAttribute("data-src");
+
+            $output['score'] = isset($obj->aggregateRating->ratingValue) ? (int)$obj->aggregateRating->ratingValue : null;
+            $output['votes'] = isset($obj->aggregateRating->ratingCount) ? (int)$obj->aggregateRating->ratingCount : null;
+
+            if ($type == "movie") {
+                $scoreDetailsJson = json_decode($html->find("#score-details-json", 0)->innerText());
+                $output['user_score'] = $scoreDetailsJson->scoreboard->audienceScore;
+                $output['user_votes'] = $scoreDetailsJson->scoreboard->audienceCount;
+            } elseif ($type == "tv") {
+                $output['user_score'] = $this->getNumbers($html->find(".audience-score .mop-ratings-wrap__percentage", 0)->innerText());
+                $output['user_votes'] = $this->getNumbers($html->find(".scoreboard__link--audience", 0)->text());
+            }
+
+            $output['summary'] = $this->cleanString($html->find("#movieSynopsis", 0)->text());
         }
-        $output['type'] = $type;
-
-        $html = HtmlDomParser::str_get_html($response);
-        $output['thumbnail'] = $html->find('.posterImage', 0)->getAttribute("data-src");
-
-        $output['score'] = isset($obj->aggregateRating->ratingValue) ? (int)$obj->aggregateRating->ratingValue : null;
-        $output['votes'] = isset($obj->aggregateRating->ratingCount) ? (int)$obj->aggregateRating->ratingCount : null;
-
-        if ($type == "movie") {
-            $scoreDetailsJson = json_decode($html->find("#score-details-json", 0)->innerText());
-            $output['user_score'] = $scoreDetailsJson->scoreboard->audienceScore;
-            $output['user_votes'] = $scoreDetailsJson->scoreboard->audienceCount;
-        } elseif ($type == "tv") {
-            $output['user_score'] = $this->getNumbers($html->find(".audience-score .mop-ratings-wrap__percentage", 0)->innerText());
-            $output['user_votes'] = $this->getNumbers($html->find(".scoreboard__link--audience", 0)->text());
-        }
-
-        $output['summary'] = $this->cleanString($html->find("#movieSynopsis", 0)->text());
 
         return [
             'result' => $output,
+            'error' => $error
         ];
     }
 }
