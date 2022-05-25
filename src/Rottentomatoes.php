@@ -28,7 +28,7 @@ class Rottentomatoes extends Base
         $json = json_decode($response);
 
         $output = [];
-        if ($type == "movie" and $json->movie) {
+        if ($type == "movie" and isset($json) and $json->movie) {
             $i = 0;
             foreach ($json->movie->items as $e) {
                 $output[$i]['full_url'] = $e->url;
@@ -41,7 +41,7 @@ class Rottentomatoes extends Base
                 $output[$i]['user_score'] = @($e->audienceScore->score) ? (int)$e->audienceScore->score : null;
                 $i++;
             }
-        } elseif ($type == "tv" and $json->tv) {
+        } elseif ($type == "tv" and isset($json) and $json->tv) {
             $i = 0;
             foreach ($json->tv->items as $e) {
                 $output[$i]['full_url'] = $e->url;
@@ -74,12 +74,16 @@ class Rottentomatoes extends Base
         $url = str_replace("/movie/", "/m/", $url);
         $response = $this->getContentPage($this->baseUrl . $url);
         $html = HtmlDomParser::str_get_html($response);
+
         $type = "movie";
         if (stripos($url, "/m/") === false) {
             $type = "tv";
         }
 
-        $error = ($html->find('h1',0)->innerText() == "404 - Not Found") ? 404 : null;
+        $error = null;
+        if($this->cleanString($html->find('h1', 0)->innerText()) == "404 - Not Found"){
+            $error = 404;
+        }
 
         $output = [];
         if (empty($error)) {
