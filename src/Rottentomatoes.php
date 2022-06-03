@@ -81,7 +81,7 @@ class Rottentomatoes extends Base
         }
 
         $error = null;
-        if($this->cleanString($html->find('h1', 0)->innerText()) == "404 - Not Found"){
+        if ($this->cleanString($html->find('h1', 0)->innerText()) == "404 - Not Found") {
             $error = 404;
         }
 
