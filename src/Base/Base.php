@@ -66,7 +66,6 @@ class Base
             return [];
         }
 
-
         return json_decode($matches[1]);
     }
 
