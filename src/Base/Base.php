@@ -56,9 +56,17 @@ class Base
      */
     protected function jsonLD($html)
     {
-        if(empty($html)) return [];
+        if (empty($html)) {
+            return [];
+        }
+
         preg_match('#<script type="application/ld\+json">(.+?)</script>#ims', $html, $matches);
-        if(empty($matches[1])) return [];
+
+        if (empty($matches[1])) {
+            return [];
+        }
+
+
         return json_decode($matches[1]);
     }
 
