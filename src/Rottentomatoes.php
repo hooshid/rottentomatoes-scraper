@@ -82,7 +82,9 @@ class Rottentomatoes extends Base
 
         $error = null;
         if ($this->cleanString($html->find('h1', 0)->innerText()) == "404 - Not Found") {
-            $error = 404;
+            $error = 404; // not found
+        } elseif (strpos($response, 'Moved Permanently. Redirecting to') !== false) {
+            $error = 301; // redirect
         }
 
         $output = [];

@@ -56,4 +56,14 @@ class ExtractTest extends TestCase
         $this->assertEmpty($result['result']);
         $this->assertEquals(404, $result['error']);
     }
+
+    public function testExtractRedirect()
+    {
+        $search = new Rottentomatoes();
+        $result = $search->extract('/tv/that_s_so_raven');
+
+        $this->assertIsArray($result);
+        $this->assertEmpty($result['result']);
+        $this->assertEquals(301, $result['error']);
+    }
 }
