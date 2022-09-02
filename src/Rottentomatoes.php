@@ -24,14 +24,25 @@ class Rottentomatoes extends Base
             return 'Type can be one of this: ' . implode(", ", $this->searchTypes);
         }
 
+        // fix typos
+        $search = str_replace(":", " ", $search);
+        $search = str_replace("  ", " ", $search);
+
         $json = null;
-        $response = $this->getContentPage($this->baseUrl . '/napi/search/all?searchQuery=' . urlencode($search) . '&type=' . $type . '&f=null');
+        $url = $this->baseUrl . '/napi/search/all?searchQuery=' . urlencode($search) . '&type=all&f=null';
+        $response = $this->getContentPage($url);
+
+        if (empty($response) or strlen($response) < 5) {
+            $url = $this->baseUrl . '/napi/search/all?searchQuery=' . urlencode($search) . '&type=' . $type . '&f=null';
+            $response = $this->getContentPage($url);
+        }
+
         if (!empty($response)) {
             $json = json_decode($response);
         }
 
         $output = [];
-        if ($type == "movie" and isset($json) and $json->movie) {
+        if ($type == "movie" and isset($json) and !empty($json->movie)) {
             $i = 0;
             foreach ($json->movie->items as $e) {
                 $output[$i]['full_url'] = $e->url;
@@ -44,7 +55,7 @@ class Rottentomatoes extends Base
                 $output[$i]['user_score'] = @($e->audienceScore->score) ? (int)$e->audienceScore->score : null;
                 $i++;
             }
-        } elseif ($type == "tv" and isset($json) and $json->tv) {
+        } elseif ($type == "tv" and isset($json) and !empty($json->tv)) {
             $i = 0;
             foreach ($json->tv->items as $e) {
                 $output[$i]['full_url'] = $e->url;
