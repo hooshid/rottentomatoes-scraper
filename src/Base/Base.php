@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Hooshid\RottentomatoesScraper\Base;
-
 
 class Base
 {

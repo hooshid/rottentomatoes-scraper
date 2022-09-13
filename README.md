@@ -90,8 +90,11 @@ search method have two param, first the title of movie or series to search and s
 ### Full examples
 just open the example folder, we put all examples and methods demo for you in there!
 
+## Related projects
+* [IMDb Scraper](https://github.com/hooshid/imdb-scraper)
+* [Metacritic Scraper](https://github.com/hooshid/metacritic-scraper)
+
 ## Todo
-* add more tests
 * add home list scraper
 
 ## License

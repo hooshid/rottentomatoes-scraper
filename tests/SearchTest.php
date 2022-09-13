@@ -42,4 +42,12 @@ class SearchTest extends TestCase
         $this->assertGreaterThan(85, $result['result'][0]['score']);
         $this->assertNull($result['result'][0]['user_score']);
     }
+
+    public function testSearchNotFound()
+    {
+        $search = new Rottentomatoes();
+        $result = $search->search('mmmmmmmmm', 'movie');
+        $this->assertIsArray($result);
+        $this->assertCount(0, $result['result']);
+    }
 }
