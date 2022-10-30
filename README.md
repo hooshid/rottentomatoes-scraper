@@ -31,7 +31,7 @@ From the example folder in the root of this repository start up php's inbuilt we
 #### Movie: The Matrix (1999) / URL: https://www.rottentomatoes.com/m/matrix
 ``` php
 $rottentomatoes = new Hooshid\RottentomatoesScraper\Rottentomatoes();
-$extract = $rottentomatoes->extract("https://www.rottentomatoes.com/m/matrix");
+$extract = $rottentomatoes->extract("/m/matrix");
 $result = $extract['result'];
 $error = $extract['error'];
 
