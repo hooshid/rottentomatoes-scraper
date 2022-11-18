@@ -28,7 +28,7 @@ class SearchTest extends TestCase
         $search = new Rottentomatoes();
         $result = $search->search('Game of Thrones', 'tv');
         $this->assertIsArray($result);
-        $this->assertCount(2, $result['result']);
+        $this->assertCount(1, $result['result']);
         $this->assertCount(10, $result['result'][0]);
 
         $this->assertEquals('https://www.rottentomatoes.com/tv/game_of_thrones', $result['result'][0]['full_url']);

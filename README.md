@@ -64,24 +64,34 @@ if ($error) {
 }
 ```
 you must always catch error first and get results.
-in this example you can pass url without full Rottentomatoes domain!
+
+NOTE: you can pass full url of Rottentomatoes or just path of page
+``` php
+extract("https://www.rottentomatoes.com/m/matrix");
+extract("/m/matrix");
+```
+the result same for both extract methods!
 
 
 ### Search
 
 ``` php
 $rottentomatoes = new Hooshid\RottentomatoesScraper\Rottentomatoes();
-$result = $rottentomatoes->search("The Matrix", "movie")['result'];
+$result = $rottentomatoes->search("The Matrix", "movie");
 
-foreach ($result as $row) {
-    echo $row['thumbnail'];
-    echo $row['title'];
-    echo $row['full_url'];
-    echo $row['title']; 
-    echo $row['year'];
-    echo $row['score']; 
-    echo $row['user_score']; 
-    echo $row['type'];
+if($result['result']) {
+    foreach ($result['result'] as $row) {
+        echo $row['thumbnail'];
+        echo $row['title'];
+        echo $row['full_url'];
+        echo $row['title']; 
+        echo $row['year'];
+        echo $row['score']; 
+        echo $row['user_score']; 
+        echo $row['type'];
+    }
+} else {
+    echo "Not found any result!";
 }
 ```
 search method always return result key, and you just need to looped and used.

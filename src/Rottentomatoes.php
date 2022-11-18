@@ -29,12 +29,14 @@ class Rottentomatoes extends Base
         $search = str_replace("  ", " ", $search);
 
         $json = null;
-        $url = $this->baseUrl . '/napi/search/all?searchQuery=' . urlencode($search) . '&type=all&f=null';
-        $response = $this->getContentPage($url);
+        //$url = $this->baseUrl . '/napi/search/all?searchQuery=' . urlencode($search) . '&type=all&f=null';
+        //$response = $this->getContentPage($url);
+        $response = $this->getSearchContent(urlencode($search), "all");
 
         if (empty($response) or strlen($response) < 5) {
-            $url = $this->baseUrl . '/napi/search/all?searchQuery=' . urlencode($search) . '&type=' . $type . '&f=null';
-            $response = $this->getContentPage($url);
+            //$url = $this->baseUrl . '/napi/search/all?searchQuery=' . urlencode($search) . '&type=' . $type . '&f=null';
+            //$response = $this->getContentPage($url);
+            $response = $this->getSearchContent(urlencode($search), $type);
         }
 
         if (!empty($response)) {
@@ -114,7 +116,7 @@ class Rottentomatoes extends Base
                     }
                     $output['type'] = $type;
 
-                    $output['thumbnail'] = $html->find('.posterImage', 0)->getAttribute("data-src");
+                    $output['thumbnail'] = $html->find('.posterImage', 0)->getAttribute("src");
 
                     $output['score'] = isset($obj->aggregateRating->ratingValue) ? (int)$obj->aggregateRating->ratingValue : null;
                     $output['votes'] = isset($obj->aggregateRating->ratingCount) ? (int)$obj->aggregateRating->ratingCount : null;
