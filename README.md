@@ -1,8 +1,9 @@
 # Rottentomatoes Scraper
 
-[![Latest Version on Packagist][ico-version]][link-packagist]
-[![Software License][ico-license]](LICENSE.md)
-[![Total Downloads][ico-downloads]][link-downloads]
+<a href="https://github.com/hooshid/rottentomatoes-scraper/actions"><img src="https://github.com/hooshid/rottentomatoes-scraper/workflows/tests/badge.svg" alt="Build Status"></a>
+<a href="https://packagist.org/packages/hooshid/rottentomatoes-scraper"><img src="https://img.shields.io/packagist/dt/hooshid/rottentomatoes-scraper" alt="Total Downloads"></a>
+<a href="https://packagist.org/packages/hooshid/rottentomatoes-scraper"><img src="https://img.shields.io/packagist/v/hooshid/rottentomatoes-scraper" alt="Latest Stable Version"></a>
+<a href="LICENSE.md"><img src="https://img.shields.io/packagist/l/hooshid/rottentomatoes-scraper" alt="License"></a>
 
 Using this Rottentomatoes API, you are able to search, browse and extract data of movies, tv series on rottentomatoes.com.
 
@@ -109,11 +110,3 @@ just open the example folder, we put all examples and methods demo for you in th
 
 ## License
 The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
-
-
-[ico-version]: https://img.shields.io/packagist/v/hooshid/rottentomatoes-scraper.svg?style=flat-square
-[ico-license]: https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square
-[ico-downloads]: https://img.shields.io/packagist/dt/hooshid/rottentomatoes-scraper.svg?style=flat-square
-
-[link-packagist]: https://packagist.org/packages/hooshid/rottentomatoes-scraper
-[link-downloads]: https://packagist.org/packages/hooshid/rottentomatoes-scraper
