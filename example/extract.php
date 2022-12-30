@@ -46,14 +46,7 @@ if (isset($_GET["output"])) {
 
             <div class="flex-container">
                 <div class="col-25 menu-links">
-                    <div class="menu-links-title">Movies</div>
-                    <a href="extract.php?url=/m/godfather">The Godfather (1972)</a>
-                    <a href="extract.php?url=/m/matrix">The Matrix (1999)</a>
-                    <a href="extract.php?url=/m/the_father_2021">The Father (2021)</a>
-
-                    <div class="menu-links-title">TV</div>
-                    <a href="extract.php?url=/tv/game_of_thrones">Game of Thrones</a>
-                    <a href="extract.php?url=/tv/breaking_bad">Breaking Bad</a>
+                    <?php include("sidebar-menu.php") ?>
                 </div>
 
                 <div class="col-75">
@@ -105,6 +98,26 @@ if (isset($_GET["output"])) {
                             <tr>
                                 <td><b>Summary:</b></td>
                                 <td><?php echo $result['summary']; ?></td>
+                            </tr>
+                        <?php } ?>
+
+                        <!-- Cast -->
+                        <?php if ($result['cast']) { ?>
+                            <tr>
+                                <td><b>Cast & Crew:</b></td>
+                                <td>
+                                    <?php foreach ($result['cast'] as $row) { ?>
+                                        <div class="celebrity-box">
+                                            <a href="celebrity.php?url=<?php echo $row['url_slug']; ?>">
+                                                <?php if ($row['thumbnail']) { ?>
+                                                    <img src="<?php echo $row['thumbnail']; ?>"
+                                                         alt="<?php echo $row['name']; ?> thumbnail">
+                                                <?php } ?>
+                                                <?php echo $row['name']; ?>
+                                            </a>
+                                        </div>
+                                    <?php } ?>
+                                </td>
                             </tr>
                         <?php } ?>
 
