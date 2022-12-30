@@ -10,7 +10,7 @@ class ExtractTest extends TestCase
         $search = new Rottentomatoes();
         $result = $search->extract('/m/matrix');
         $this->assertIsArray($result);
-        $this->assertCount(9, $result['result']);
+        $this->assertCount(10, $result['result']);
 
         $this->assertEquals('The Matrix', $result['result']['title']);
         $this->assertEquals('https://www.rottentomatoes.com/m/matrix', $result['result']['full_url']);
@@ -23,6 +23,12 @@ class ExtractTest extends TestCase
         $this->assertGreaterThan(80, $result['result']['user_score']);
         $this->assertGreaterThan(33324200, $result['result']['user_votes']);
 
+        $this->assertIsArray($result['result']['cast']);
+        $this->assertCount(32, $result['result']['cast']);
+        $this->assertEquals('Keanu Reeves', $result['result']['cast'][0]['name']);
+        $this->assertEquals('keanu_reeves', $result['result']['cast'][0]['url_slug']);
+        $this->assertEquals('https://resizing.flixster.com/YARxkSH8c59kDC2pA87rGSQ8uX0=/100x120/v2/https://flxt.tmsimg.com/assets/1443_v9_bc.jpg', $result['result']['cast'][0]['thumbnail']);
+
         $this->assertNull($result['error']);
     }
 
@@ -31,7 +37,7 @@ class ExtractTest extends TestCase
         $search = new Rottentomatoes();
         $result = $search->extract('/tv/breaking_bad');
         $this->assertIsArray($result);
-        $this->assertCount(9, $result['result']);
+        $this->assertCount(10, $result['result']);
 
         $this->assertEquals('Breaking Bad', $result['result']['title']);
         $this->assertEquals('https://www.rottentomatoes.com/tv/breaking_bad', $result['result']['full_url']);
@@ -43,6 +49,12 @@ class ExtractTest extends TestCase
 
         $this->assertGreaterThan(95, $result['result']['user_score']);
         $this->assertEquals(0, $result['result']['user_votes']);
+
+        $this->assertIsArray($result['result']['cast']);
+        $this->assertCount(18, $result['result']['cast']);
+        $this->assertEquals('Bryan Cranston', $result['result']['cast'][0]['name']);
+        $this->assertEquals('bryan_cranston', $result['result']['cast'][0]['url_slug']);
+        $this->assertEquals('https://resizing.flixster.com/gFvxVY5fopLlOqdUHOzWddcIr-o=/100x120/v2/https://flxt.tmsimg.com/assets/164311_v9_bb.jpg', $result['result']['cast'][0]['thumbnail']);
 
         $this->assertNull($result['error']);
     }
