@@ -44,7 +44,6 @@ if (isset($_GET["output"])) {
                     <th>Title</th>
                     <th>Year</th>
                     <th>Score</th>
-                    <th>User Score</th>
                     <th>Type</th>
                 </tr>
                 <?php foreach ($result as $row) { ?>
@@ -53,7 +52,6 @@ if (isset($_GET["output"])) {
                         <td><a href="<?php echo $row['full_url']; ?>" target="_blank"><?php echo $row['title']; ?></a></td>
                         <td><?php echo $row['year']; ?></td>
                         <td><?php echo $row['score']; ?></td>
-                        <td><?php echo $row['user_score']; ?></td>
                         <td><?php echo $row['type']; ?></td>
                     </tr>
                 <?php } ?>

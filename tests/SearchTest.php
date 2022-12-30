@@ -11,7 +11,7 @@ class SearchTest extends TestCase
         $result = $search->search('Spider-Man: Far From Home', 'movie');
         $this->assertIsArray($result);
         $this->assertCount(1, $result['result']);
-        $this->assertCount(8, $result['result'][0]);
+        $this->assertCount(7, $result['result'][0]);
 
         $this->assertEquals('https://www.rottentomatoes.com/m/spider_man_far_from_home', $result['result'][0]['full_url']);
         $this->assertEquals('spider_man_far_from_home', $result['result'][0]['url_slug']);
@@ -20,7 +20,15 @@ class SearchTest extends TestCase
         $this->assertEquals('Spider-Man: Far From Home', $result['result'][0]['title']);
         $this->assertEquals(2019, $result['result'][0]['year']);
         $this->assertGreaterThan(85, $result['result'][0]['score']);
-        $this->assertGreaterThan(85, $result['result'][0]['user_score']);
+    }
+
+    public function testSearchMovieResultCount()
+    {
+        $search = new Rottentomatoes();
+        $result = $search->search('Pirates of the Caribbean', 'movie');
+        $this->assertIsArray($result);
+        $this->assertCount(7, $result['result']);
+        $this->assertCount(7, $result['result'][0]);
     }
 
     public function testSearchTV()
@@ -29,7 +37,7 @@ class SearchTest extends TestCase
         $result = $search->search('Game of Thrones', 'tv');
         $this->assertIsArray($result);
         $this->assertCount(1, $result['result']);
-        $this->assertCount(10, $result['result'][0]);
+        $this->assertCount(9, $result['result'][0]);
 
         $this->assertEquals('https://www.rottentomatoes.com/tv/game_of_thrones', $result['result'][0]['full_url']);
         $this->assertEquals('game_of_thrones', $result['result'][0]['url_slug']);
@@ -40,7 +48,6 @@ class SearchTest extends TestCase
         $this->assertEquals(2011, $result['result'][0]['startYear']);
         $this->assertEquals(2019, $result['result'][0]['endYear']);
         $this->assertGreaterThan(85, $result['result'][0]['score']);
-        $this->assertNull($result['result'][0]['user_score']);
     }
 
     public function testSearchNotFound()
