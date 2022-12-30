@@ -40,8 +40,10 @@
 
         <div class="menu-links">
             <a href="/example/extract.php?url=/m/matrix">The Matrix (1999) - Movie</a>
+            <a href="/example/extract.php?url=/m/avatar">Avatar (2009) - Movie</a>
             <a href="/example/extract.php?url=/tv/game_of_thrones">Game of Thrones - TV Series</a>
             <a href="/example/extract.php?url=/tv/the_blacklist">The Blacklist - TV Series</a>
+            <a href="/example/celebrity.php?url=sam_worthington">Sam Worthington - Celebrity</a>
         </div>
     </div>
 </div>

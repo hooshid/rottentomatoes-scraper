@@ -301,68 +301,11 @@ ol, ul {
     position: relative;
 }
 
-.metascore_w {
-    vertical-align: middle;
-    text-align: center;
-    color: #fff !important;
-    font-family: Arial, Helvetica, sans-serif;
-    font-style: normal !important;
-    font-weight: bold !important;
-    background-color: transparent;
-    height: 2em;
-    width: 2em;
-    line-height: 2em;
-    font-size: 17px;
-    border-radius: 6px;
-}
-
-span.metascore_w, a.metascore_w {
-    display: inline-block;
-}
-
-.result .metascore_w {
-    float: right;
-    position: relative;
-    top: 0;
-}
-
-.metascore_w.positive, .metascore_w.good, .metascore_w.sixtyone, .metascore_w.game.seventyfive, .metascore_w.score_favorable, .metascore_w.score_outstanding {
-    background-color: #6c3;
-}
-
-.metascore_w.tbd, .metascore_w.score_tbd {
-    color: #FFF !important;
-    background-color: #ccc;
-    text-transform: lowercase;
-}
-
-.metascore_w.mixed, .metascore_w.forty, .metascore_w.game.fifty, .metascore_w.score_mixed {
-    background-color: #fc3;
-}
-
-.metascore_w.negative, .metascore_w.bad, .metascore_w.score_terrible, .metascore_w.score_unfavorable {
-    background-color: #f00;
-}
-
 .result .result_thumbnail img {
     width: 78px;
     margin-right: 20px;
 }
 
-.must-see {
-    display: block;
-    float: right;
-    width: 35px;
-    height: 35px;
-    margin: 0 10px 0 0;
-}
-
-.basic_stats .product_title {
-    font-weight: bold;
-    font-size: 16px;
-    color: #424242;
-    margin-bottom: 5px;
-}
 
 a {
     color: inherit;
@@ -381,14 +324,10 @@ a {
     color: #424242;
 }
 
-.metascore_w.user {
-    border-radius: 55%;
-    color: #fff;
-    height: 2em;
-    width: 2em;
-    line-height: 2em;
-}
-
-.metascore_w ~ .metascore_w.user {
-    margin: 0 10px 0 0;
+.celebrity-box {
+    width: 100px;
+    display: inline-block;
+    text-align: center;
+    min-height: 180px;
+    vertical-align: top;
 }
