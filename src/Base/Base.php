@@ -48,10 +48,10 @@ class Base
         }
 
         $post_data = json_encode(array(
-            '_expiry' => '' . $_expiry . '',
-            '_token' => '' . $_token . '',
-            'searchQuery' => '' . $searchQuery . '',
-            'type' => '' . $type . '',
+            '_expiry' => $_expiry,
+            '_token' => $_token,
+            'searchQuery' => $searchQuery,
+            'type' => $type,
         ));
 
         // Prepare new cURL resource
