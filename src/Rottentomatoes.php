@@ -89,67 +89,6 @@ class Rottentomatoes extends Base
         ];
     }
 
-    public function oldSearchWithApi($search, $type)
-    {
-        if (!in_array($type, $this->searchTypes)) {
-            return 'Type can be one of this: ' . implode(", ", $this->searchTypes);
-        }
-
-        // fix typos
-        $search = str_replace(":", " ", $search);
-        $search = str_replace("  ", " ", $search);
-
-        $json = null;
-        //$url = $this->baseUrl . '/napi/search/all?searchQuery=' . urlencode($search) . '&type=all&f=null';
-        //$response = $this->getContentPage($url);
-        $response = $this->getSearchContent(urlencode($search), "all");
-
-        if (empty($response) or strlen($response) < 5) {
-            //$url = $this->baseUrl . '/napi/search/all?searchQuery=' . urlencode($search) . '&type=' . $type . '&f=null';
-            //$response = $this->getContentPage($url);
-            // $response = $this->getSearchContent(urlencode($search), $type);
-        }
-
-        if (!empty($response)) {
-            $json = json_decode($response);
-        }
-
-        $output = [];
-        if ($type == "movie" and isset($json) and !empty($json->movie)) {
-            $i = 0;
-            foreach ($json->movie->items as $e) {
-                $output[$i]['full_url'] = $e->url;
-                $output[$i]['url_slug'] = $this->afterLast($e->url);
-                $output[$i]['thumbnail'] = $e->imageUrl;
-                $output[$i]['type'] = 'movie';
-                $output[$i]['title'] = $this->cleanString($e->name);
-                $output[$i]['year'] = isset($e->releaseYear) ? (int)$e->releaseYear : null;
-                $output[$i]['score'] = @$e->criticsScore->value;
-                $output[$i]['user_score'] = @($e->audienceScore->score) ? (int)$e->audienceScore->score : null;
-                $i++;
-            }
-        } elseif ($type == "tv" and isset($json) and !empty($json->tv)) {
-            $i = 0;
-            foreach ($json->tv->items as $e) {
-                $output[$i]['full_url'] = $e->url;
-                $output[$i]['url_slug'] = $this->afterLast($e->url);
-                $output[$i]['thumbnail'] = $e->imageUrl;
-                $output[$i]['type'] = 'tv';
-                $output[$i]['title'] = $this->cleanString($e->name);
-                $output[$i]['year'] = isset($e->startYear) ? (int)$e->startYear : null;
-                $output[$i]['startYear'] = isset($e->startYear) ? (int)$e->startYear : null;
-                $output[$i]['endYear'] = isset($e->endYear) ? (int)$e->endYear : null;
-                $output[$i]['score'] = @$e->criticsScore->value;
-                $output[$i]['user_score'] = @($e->audienceScore->score) ? (int)$e->audienceScore->score : null;
-                $i++;
-            }
-        }
-
-        return [
-            'result' => $output
-        ];
-    }
-
     /**
      * Extract data from movie or tv page
      *
