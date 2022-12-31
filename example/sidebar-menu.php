@@ -10,6 +10,7 @@
 <a href="extract.php?url=/tv/the_blacklist">The Blacklist</a>
 
 <div class="menu-links-title">Celebrity</div>
+<a href="celebrity.php?url=johnny_depp">Johnny Depp</a>
 <a href="celebrity.php?url=sam_worthington">Sam Worthington</a>
 <a href="celebrity.php?url=peter_dinklage">Peter Dinklage</a>
 <a href="celebrity.php?url=emilia_clarke">Emilia Clarke</a>

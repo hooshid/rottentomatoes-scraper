@@ -98,6 +98,35 @@ if($result['result']) {
 search method always return result key, and you just need to looped and used.
 search method have two param, first the title of movie or series to search and second the type, type just can be movie or tv.
 
+### Celebrity
+
+``` php
+$rottentomatoes = new Hooshid\RottentomatoesScraper\Rottentomatoes();
+$result = $rottentomatoes->celebrity("johnny_depp");
+
+if($result['result']) {
+    echo $result['result']['name'];
+    echo $result['result']['full_url'];
+    echo $result['result']['url_slug'];
+    echo $result['result']['thumbnail'];
+    echo $result['result']['bio'];
+    // Movies : array
+    foreach ($result['result']['movies'] as $row) {
+        echo $row['title'];
+        echo $row['url'];
+        echo $row['year'];
+    }
+    // Series : array
+    foreach ($result['result']['series'] as $row) {
+        echo $row['title'];
+        echo $row['url'];
+        echo $row['year'];
+    }
+} else {
+    echo "Not found!";
+}
+```
+
 ### Full examples
 just open the example folder, we put all examples and methods demo for you in there!
 
