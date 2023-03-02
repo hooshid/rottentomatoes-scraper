@@ -134,8 +134,8 @@ class Rottentomatoes extends Base
                     $castContainer = "";
                     if ($type == "movie") {
                         $scoreDetailsJson = json_decode($html->find("#score-details-json", 0)->innerText());
-                        $output['user_score'] = $scoreDetailsJson->scoreboard->audienceScore;
-                        $output['user_votes'] = $scoreDetailsJson->scoreboard->audienceCount;
+                        $output['user_score'] = $scoreDetailsJson->scoreboard->audienceScore->value;
+                        $output['user_votes'] = $scoreDetailsJson->scoreboard->audienceScore->ratingCount;
 
                         $castContainer = "#movie-cast .castSection .cast-item";
                     } elseif ($type == "tv") {
