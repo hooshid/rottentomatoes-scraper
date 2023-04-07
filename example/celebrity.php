@@ -70,7 +70,8 @@ if (isset($_GET["output"])) {
                         <?php if ($result['thumbnail']) { ?>
                             <tr>
                                 <td><b>Thumbnail:</b></td>
-                                <td><img src="<?php echo $result['thumbnail']; ?>" alt="<?php echo $result['name']; ?> thumbnail" style="max-width: 100px;"></td>
+                                <td><img src="<?php echo $result['thumbnail']; ?>"
+                                         alt="<?php echo $result['name']; ?> thumbnail" style="max-width: 100px;"></td>
                             </tr>
                         <?php } ?>
 

@@ -31,7 +31,8 @@ if (isset($_GET["output"])) {
 <body>
 
 <a href="/example" class="back-page">Go back</a>
-<a href="/example/search.php?<?php echo http_build_query($_GET); ?>&output=json" class="output-json-link">JSON Format</a>
+<a href="/example/search.php?<?php echo http_build_query($_GET); ?>&output=json" class="output-json-link">JSON
+    Format</a>
 
 <div class="container">
     <div class="boxed">
@@ -48,8 +49,10 @@ if (isset($_GET["output"])) {
                 </tr>
                 <?php foreach ($result as $row) { ?>
                     <tr>
-                        <td><img src="<?php echo $row['thumbnail']; ?>" width="80px" alt="<?php echo $row['title']; ?>"></td>
-                        <td><a href="<?php echo $row['full_url']; ?>" target="_blank"><?php echo $row['title']; ?></a></td>
+                        <td><img src="<?php echo $row['thumbnail']; ?>" width="80px" alt="<?php echo $row['title']; ?>">
+                        </td>
+                        <td><a href="<?php echo $row['full_url']; ?>" target="_blank"><?php echo $row['title']; ?></a>
+                        </td>
                         <td><?php echo $row['year']; ?></td>
                         <td><?php echo $row['score']; ?></td>
                         <td><?php echo $row['type']; ?></td>

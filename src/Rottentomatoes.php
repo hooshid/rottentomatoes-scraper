@@ -125,7 +125,7 @@ class Rottentomatoes extends Base
                         $output['full_url'] = $this->baseUrl . $obj->url;
                     }
 
-                    if($type == "tv"){
+                    if ($type == "tv") {
                         $output['full_url'] = $this->baseUrl . $url;
                     }
 
