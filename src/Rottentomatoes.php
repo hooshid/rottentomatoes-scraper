@@ -124,9 +124,14 @@ class Rottentomatoes extends Base
                     if (stripos($obj->url, "https://") === false) {
                         $output['full_url'] = $this->baseUrl . $obj->url;
                     }
+
+                    if($type == "tv"){
+                        $output['full_url'] = $this->baseUrl . $url;
+                    }
+
                     $output['type'] = $type;
 
-                    $output['thumbnail'] = $html->find('.posterImage', 0)->getAttribute("src");
+                    $output['thumbnail'] = $html->find('.posterImage, img[data-qa=poster-image], .movie-thumbnail-wrap img', 0)->getAttribute("src");
 
                     $output['score'] = isset($obj->aggregateRating->ratingValue) ? (int)$obj->aggregateRating->ratingValue : null;
                     $output['votes'] = isset($obj->aggregateRating->ratingCount) ? (int)$obj->aggregateRating->ratingCount : null;
@@ -137,22 +142,23 @@ class Rottentomatoes extends Base
                         $output['user_score'] = $scoreDetailsJson->scoreboard->audienceScore->value;
                         $output['user_votes'] = $scoreDetailsJson->scoreboard->audienceScore->ratingCount;
 
-                        $castContainer = "#movie-cast .castSection .cast-item";
+                        $castContainer = "#cast-and-crew .content-wrap .cast-and-crew-item";
                     } elseif ($type == "tv") {
-                        $output['user_score'] = $this->getNumbers($html->find(".audience-score .mop-ratings-wrap__percentage", 0)->innerText());
+                        $output['user_score'] = $this->getNumbers($html->find("score-board", 0)->getAttribute('audiencescore'));
                         $output['user_votes'] = $this->getNumbers($html->find(".scoreboard__link--audience", 0)->text());
 
-                        $castContainer = "#fullCast .castSection .cast-item";
+                        $castContainer = "#cast-and-crew .cast-wrap .cast-and-crew-item";
                     }
 
                     $output['cast'] = [];
                     if ($html->findOneOrFalse($castContainer)) {
                         foreach ($html->find($castContainer) as $e) {
-                            $url = $e->find('a.articleLink', 0)->getAttribute('href');
+                            $url = $e->find('a', 0)->getAttribute('href');
                             $url_slug = str_replace("/celebrity/", "", $url);
-                            $name = $e->find('a.articleLink span', 0)->text();
-                            $thumbnail = $e->find('.actorThumb', 0)->getAttribute('src');
-                            if (str_contains($thumbnail, 'poster_default_thumbnail')) {
+                            $name = $e->find('.metadata a p', 0)->text();
+                            $thumbnail = $e->find('img', 0)->getAttribute('src');
+                            if (str_contains($thumbnail, 'poster_default_thumbnail') or
+                                str_contains($thumbnail, 'poster-default-thumbnail')) {
                                 $thumbnail = null;
                             }
 
@@ -167,7 +173,7 @@ class Rottentomatoes extends Base
                         }
                     }
 
-                    $output['summary'] = $this->cleanString($html->find("#movieSynopsis", 0)->text());
+                    $output['summary'] = $this->cleanString($html->find("[data-qa=movie-info-synopsis]", 0)->text());
                 }
             }
         }
