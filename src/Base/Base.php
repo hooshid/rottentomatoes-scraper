@@ -39,6 +39,9 @@ class Base
      */
     protected function cleanString($str, $remove = null): ?string
     {
+        if (empty($str)) {
+            return null;
+        }
         if (!empty($remove)) {
             $str = str_replace($remove, "", $str);
         }
