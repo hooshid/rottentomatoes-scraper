@@ -154,7 +154,6 @@ class Rottentomatoes extends Base
                             $output['user_votes'] = null;
                         }
 
-
                         $castContainer = "#cast-and-crew .content-wrap .cast-and-crew-item";
                     } elseif ($type == "tv") {
                         $output['user_score'] = $this->getNumbers($html->find("score-board", 0)->getAttribute('audiencescore'));
