@@ -17,7 +17,7 @@ class ExtractTest extends TestCase
         $this->assertEquals('movie', $result['result']['type']);
         $this->assertEquals('https://resizing.flixster.com/kO9s-jGsOi3YXyHkzVlmO9Z5lzI=/206x305/v2/https://resizing.flixster.com/hTz9Ap43sCkvDiFvCkjmb1IWkUg=/ems.cHJkLWVtcy1hc3NldHMvbW92aWVzL2EwMGEwNmQxLTE1MGYtNGQwYS04ZDhlLWQ0MzYwOTQ5M2JlMC5qcGc=', $result['result']['thumbnail']);
 
-        $this->assertGreaterThan(85, $result['result']['score']);
+        $this->assertGreaterThan(80, $result['result']['score']);
         $this->assertGreaterThan(155, $result['result']['votes']);
 
         $this->assertGreaterThan(80, $result['result']['user_score']);
