@@ -21,6 +21,22 @@ class CelebrityTest extends TestCase
 
         $this->assertIsArray($result['result']['movies']);
         $this->assertIsArray($result['result']['series']);
+
+        // test first movie data
+        $firstMovie = $result['result']['movies'][count($result['result']['movies']) - 1];
+        $this->assertEquals('Bootmen', $firstMovie['title']);
+        $this->assertEquals('/m/bootmen', $firstMovie['url']);
+        $this->assertEquals('2000', $firstMovie['year']);
+        $this->assertLessThan(40, $firstMovie['tomatometer']);
+        $this->assertLessThan(70, $firstMovie['audiencescore']);
+
+        // test first series data
+        $firstMovie = $result['result']['series'][count($result['result']['series']) - 1];
+        $this->assertEquals('JAG', $firstMovie['title']);
+        $this->assertEquals('/tv/jag', $firstMovie['url']);
+        $this->assertEquals('2000', $firstMovie['year']);
+        $this->assertNull($firstMovie['tomatometer']);
+        $this->assertLessThan(40, $firstMovie['audiencescore']);
     }
 
     public function testCelebrityNotFound()

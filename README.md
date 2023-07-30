@@ -115,12 +115,16 @@ if($result['result']) {
         echo $row['title'];
         echo $row['url'];
         echo $row['year'];
+        echo $row['tomatometer'];
+        echo $row['audiencescore'];
     }
     // Series : array
     foreach ($result['result']['series'] as $row) {
         echo $row['title'];
         echo $row['url'];
         echo $row['year'];
+        echo $row['tomatometer'];
+        echo $row['audiencescore'];
     }
 } else {
     echo "Not found!";
@@ -133,9 +137,6 @@ just open the example folder, we put all examples and methods demo for you in th
 ## Related projects
 * [IMDb Scraper](https://github.com/hooshid/imdb-scraper)
 * [Metacritic Scraper](https://github.com/hooshid/metacritic-scraper)
-
-## Todo
-* add home list scraper
 
 ## License
 The MIT License (MIT). Please see [License File](LICENSE.md) for more information.

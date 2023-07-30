@@ -2,6 +2,7 @@
 
 namespace Hooshid\RottentomatoesScraper;
 
+use Exception;
 use Hooshid\RottentomatoesScraper\Base\Base;
 use voku\helper\HtmlDomParser;
 
@@ -142,14 +143,14 @@ class Rottentomatoes extends Base
                             $scoreDetailsJson = json_decode($html->find("#scoreDetails", 0)->innerText());
                             $output['user_score'] = $scoreDetailsJson->modal->audienceScoreAll->value;
                             $output['user_votes'] = $scoreDetailsJson->modal->audienceScoreAll->ratingCount;
-                        } catch (\Exception $exception) {
+                        } catch (Exception $exception) {
                             $output['user_score'] = null;
                             $output['user_votes'] = null;
                         }
 
                         try {
                             $output['user_score'] = $this->getNumbers($html->find("score-board", 0)->getAttribute('audiencescore'));
-                        } catch (\Exception $exception) {
+                        } catch (Exception $exception) {
                             $output['user_score'] = null;
                             $output['user_votes'] = null;
                         }
@@ -238,11 +239,16 @@ class Rottentomatoes extends Base
                             $title = $e->find('.celebrity-filmography__title a', 0)->text();
                             $year = $e->find('.celebrity-filmography__year', 0)->text();
 
+                            $tomatometer = $this->cleanString($e->getAttribute('data-tomatometer'));
+                            $audiencescore = $this->cleanString($e->getAttribute('data-audiencescore'));
+
                             if (!empty($url) and !empty($title)) {
                                 $output['movies'][] = [
                                     'title' => $this->cleanString($title),
                                     'url' => $this->cleanString($url),
-                                    'year' => $this->cleanString($year)
+                                    'year' => $this->cleanString($year),
+                                    'tomatometer' => $tomatometer ? (int)$tomatometer : null,
+                                    'audiencescore' => $audiencescore ? (int)$audiencescore : null
                                 ];
                             }
                         }
@@ -257,11 +263,16 @@ class Rottentomatoes extends Base
                             $year = str_replace(" ", "", $year);
                             $year = str_replace("--", "-", $year);
 
+                            $tomatometer = $this->cleanString($e->getAttribute('data-tomatometer'));
+                            $audiencescore = $this->cleanString($e->getAttribute('data-audiencescore'));
+
                             if (!empty($url) and !empty($title)) {
                                 $output['series'][] = [
                                     'title' => $this->cleanString($title),
                                     'url' => $this->cleanString($url),
-                                    'year' => trim($year)
+                                    'year' => trim($year),
+                                    'tomatometer' => $tomatometer ? (int)$tomatometer : null,
+                                    'audiencescore' => $audiencescore ? (int)$audiencescore : null
                                 ];
                             }
                         }
