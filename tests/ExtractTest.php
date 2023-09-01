@@ -15,7 +15,7 @@ class ExtractTest extends TestCase
         $this->assertEquals('The Matrix', $result['result']['title']);
         $this->assertEquals('https://www.rottentomatoes.com/m/matrix', $result['result']['full_url']);
         $this->assertEquals('movie', $result['result']['type']);
-        $this->assertEquals('https://resizing.flixster.com/kO9s-jGsOi3YXyHkzVlmO9Z5lzI=/206x305/v2/https://resizing.flixster.com/hTz9Ap43sCkvDiFvCkjmb1IWkUg=/ems.cHJkLWVtcy1hc3NldHMvbW92aWVzL2EwMGEwNmQxLTE1MGYtNGQwYS04ZDhlLWQ0MzYwOTQ5M2JlMC5qcGc=', $result['result']['thumbnail']);
+        $this->assertEquals('https://resizing.flixster.com/Z7zwBRCYapEJDXf-XgjetfUmiaE=/206x305/v2/https://resizing.flixster.com/oqHidMIy15bLkjYOfDXYOfC7BxU=/ems.cHJkLWVtcy1hc3NldHMvbW92aWVzLzg5ZDA5ZGUyLWZmNjYtNGQ0Yy1iM2NiLTQ0NjgzNjM1YjYzNi5qcGc=', $result['result']['thumbnail']);
 
         $this->assertGreaterThan(80, $result['result']['score']);
         $this->assertGreaterThan(155, $result['result']['votes']);

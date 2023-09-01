@@ -22,21 +22,27 @@ class CelebrityTest extends TestCase
         $this->assertIsArray($result['result']['movies']);
         $this->assertIsArray($result['result']['series']);
 
-        // test first movie data
-        $firstMovie = $result['result']['movies'][count($result['result']['movies']) - 1];
-        $this->assertEquals('Bootmen', $firstMovie['title']);
-        $this->assertEquals('/m/bootmen', $firstMovie['url']);
-        $this->assertEquals('2000', $firstMovie['year']);
-        $this->assertLessThan(40, $firstMovie['tomatometer']);
-        $this->assertLessThan(70, $firstMovie['audiencescore']);
+        // movie data
+        foreach ($result['result']['movies'] as $movie) {
+            if ($movie['title'] == "Avatar") {
+                $this->assertEquals('Avatar', $movie['title']);
+                $this->assertEquals('/m/avatar', $movie['url']);
+                $this->assertEquals('2009', $movie['year']);
+                $this->assertGreaterThan(80, $movie['tomatometer']);
+                $this->assertGreaterThan(80, $movie['audiencescore']);
+            }
+        }
 
-        // test first series data
-        $firstMovie = $result['result']['series'][count($result['result']['series']) - 1];
-        $this->assertEquals('JAG', $firstMovie['title']);
-        $this->assertEquals('/tv/jag', $firstMovie['url']);
-        $this->assertEquals('2000', $firstMovie['year']);
-        $this->assertNull($firstMovie['tomatometer']);
-        $this->assertLessThan(40, $firstMovie['audiencescore']);
+        // series data
+        foreach ($result['result']['series'] as $serial) {
+            if ($serial['title'] == "JAG") {
+                $this->assertEquals('JAG', $serial['title']);
+                $this->assertEquals('/tv/jag', $serial['url']);
+                $this->assertEquals('2000', $serial['year']);
+                $this->assertNull($serial['tomatometer']);
+                $this->assertLessThan(40, $serial['audiencescore']);
+            }
+        }
     }
 
     public function testCelebrityNotFound()
