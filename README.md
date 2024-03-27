@@ -5,7 +5,7 @@
 <a href="https://packagist.org/packages/hooshid/rottentomatoes-scraper"><img src="https://img.shields.io/packagist/v/hooshid/rottentomatoes-scraper" alt="Latest Stable Version"></a>
 <a href="LICENSE.md"><img src="https://img.shields.io/packagist/l/hooshid/rottentomatoes-scraper" alt="License"></a>
 
-Using this Rottentomatoes API, you are able to search, browse and extract data of movies, tv series on rottentomatoes.com.
+Using this Rottentomatoes API, you are able to search, browse and extract data of Movies, Series on rottentomatoes.com.
 
 ## Install
 This library scrapes rottentomatoes.com so changes their site can cause parts of this library to fail. You will probably need to update a few times a year.
