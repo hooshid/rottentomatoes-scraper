@@ -15,7 +15,8 @@ class ExtractTest extends TestCase
         $this->assertEquals('The Matrix', $result['result']['title']);
         $this->assertEquals('https://www.rottentomatoes.com/m/matrix', $result['result']['full_url']);
         $this->assertEquals('movie', $result['result']['type']);
-        $this->assertEquals('https://resizing.flixster.com/iI5mSBfuUPS6lCU27WKCbPfwHd4=/206x305/v2/https://resizing.flixster.com/YA79LGTeRyWJWc8CHUcSX5Yc19M=/ems.cHJkLWVtcy1hc3NldHMvbW92aWVzLzljZGQ5NjVkLWJkNmEtNDJlYy1hNDQyLWM2ZWQwMzRiZGVhZC5wbmc=', $result['result']['thumbnail']);
+        $this->assertEquals('https://resizing.flixster.com/kO9s-jGsOi3YXyHkzVlmO9Z5lzI=/206x305/v2/https://resizing.flixster.com/hTz9Ap43sCkvDiFvCkjmb1IWkUg=/ems.cHJkLWVtcy1hc3NldHMvbW92aWVzL2EwMGEwNmQxLTE1MGYtNGQwYS04ZDhlLWQ0MzYwOTQ5M2JlMC5qcGc=', $result['result']['thumbnail']);
+        $this->assertGreaterThan(100, strlen($result['result']['summary']));
 
         $this->assertGreaterThan(80, $result['result']['score']);
         $this->assertGreaterThan(155, $result['result']['votes']);
@@ -27,7 +28,7 @@ class ExtractTest extends TestCase
         $this->assertCount(32, $result['result']['cast']);
         $this->assertEquals('Keanu Reeves', $result['result']['cast'][0]['name']);
         $this->assertEquals('keanu_reeves', $result['result']['cast'][0]['url_slug']);
-        $this->assertEquals('https://resizing.flixster.com/YARxkSH8c59kDC2pA87rGSQ8uX0=/100x120/v2/https://flxt.tmsimg.com/assets/1443_v9_bc.jpg', $result['result']['cast'][0]['thumbnail']);
+        $this->assertEquals('https://resizing.flixster.com/thX_rK0KiBbsHU8zYoMxN9ipq7c=/100x120/v2/https://resizing.flixster.com/-XZAfHZM39UwaGJIFWKAE8fS0ak=/v3/t/assets/1443_v9_bc.jpg', $result['result']['cast'][0]['thumbnail']);
 
         $this->assertNull($result['error']);
     }
@@ -42,19 +43,20 @@ class ExtractTest extends TestCase
         $this->assertEquals('Breaking Bad', $result['result']['title']);
         $this->assertEquals('https://www.rottentomatoes.com/tv/breaking_bad', $result['result']['full_url']);
         $this->assertEquals('tv', $result['result']['type']);
-        $this->assertEquals('https://resizing.flixster.com/l9rkDdf5Arg5Ffiq_Q22LsKC76w=/206x305/v2/https://flxt.tmsimg.com/assets/p185846_b_v8_ad.jpg', $result['result']['thumbnail']);
+        $this->assertEquals('https://resizing.flixster.com/aFlnGpyD8kDQFfHsjleVKHSm4qY=/206x305/v2/https://resizing.flixster.com/-XZAfHZM39UwaGJIFWKAE8fS0ak=/v3/t/assets/p185846_b_v8_ad.jpg', $result['result']['thumbnail']);
+        $this->assertGreaterThan(100, strlen($result['result']['summary']));
 
         $this->assertGreaterThan(90, $result['result']['score']);
         $this->assertGreaterThan(240, $result['result']['votes']);
 
         $this->assertGreaterThan(90, $result['result']['user_score']);
-        $this->assertEquals(0, $result['result']['user_votes']);
+        $this->assertGreaterThan(27000, $result['result']['user_votes']);
 
         $this->assertIsArray($result['result']['cast']);
-        $this->assertCount(18, $result['result']['cast']);
-        $this->assertEquals('Bryan Cranston', $result['result']['cast'][0]['name']);
-        $this->assertEquals('bryan_cranston', $result['result']['cast'][0]['url_slug']);
-        $this->assertEquals('https://resizing.flixster.com/gFvxVY5fopLlOqdUHOzWddcIr-o=/100x120/v2/https://flxt.tmsimg.com/assets/164311_v9_bb.jpg', $result['result']['cast'][0]['thumbnail']);
+        $this->assertCount(6, $result['result']['cast']);
+        $this->assertEquals('Vince Gilligan', $result['result']['cast'][0]['name']);
+        $this->assertEquals('vince_gilligan', $result['result']['cast'][0]['url_slug']);
+        $this->assertEquals('https://resizing.flixster.com/-KptjO4A26O20_TY102wK1E8wAY=/100x120/v2/https://resizing.flixster.com/-XZAfHZM39UwaGJIFWKAE8fS0ak=/v3/t/assets/255299_v9_bc.jpg', $result['result']['cast'][0]['thumbnail']);
 
         $this->assertNull($result['error']);
     }

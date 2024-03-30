@@ -15,7 +15,7 @@ class SearchTest extends TestCase
 
         $this->assertEquals('https://www.rottentomatoes.com/m/spider_man_far_from_home', $result['result'][0]['full_url']);
         $this->assertEquals('spider_man_far_from_home', $result['result'][0]['url_slug']);
-        $this->assertEquals('https://resizing.flixster.com/C2MmVwGgzp92mgJvj19Tbv6BhkE=/fit-in/80x126/v2/https://flxt.tmsimg.com/NowShowing/177946/177946_aa.jpg', $result['result'][0]['thumbnail']);
+        $this->assertEquals('https://resizing.flixster.com/cPqcY0t8DVtIbfSb7HdHOtz4aKQ=/fit-in/80x126/v2/https://resizing.flixster.com/-XZAfHZM39UwaGJIFWKAE8fS0ak=/v3/t/NowShowing/177946/177946_aa.jpg', $result['result'][0]['thumbnail']);
         $this->assertEquals('movie', $result['result'][0]['type']);
         $this->assertEquals('Spider-Man: Far From Home', $result['result'][0]['title']);
         $this->assertEquals(2019, $result['result'][0]['year']);
@@ -41,7 +41,7 @@ class SearchTest extends TestCase
 
         $this->assertEquals('https://www.rottentomatoes.com/tv/game_of_thrones', $result['result'][0]['full_url']);
         $this->assertEquals('game_of_thrones', $result['result'][0]['url_slug']);
-        $this->assertEquals('https://resizing.flixster.com/bwl5UJxKDu79g3IGf_1og3e8SYw=/fit-in/80x126/v2/https://flxt.tmsimg.com/assets/p8553063_b_v13_ax.jpg', $result['result'][0]['thumbnail']);
+        $this->assertEquals('https://resizing.flixster.com/kXSybtJvZlV6mXrfqhmerZwlIaA=/fit-in/80x126/v2/https://resizing.flixster.com/-XZAfHZM39UwaGJIFWKAE8fS0ak=/v3/t/assets/p8553063_b_v13_ax.jpg', $result['result'][0]['thumbnail']);
         $this->assertEquals('tv', $result['result'][0]['type']);
         $this->assertEquals('Game of Thrones', $result['result'][0]['title']);
         $this->assertEquals(2011, $result['result'][0]['year']);

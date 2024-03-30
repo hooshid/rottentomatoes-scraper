@@ -129,16 +129,16 @@ class Rottentomatoes extends Base
                     if ($type == "tv") {
                         $output['full_url'] = $this->baseUrl . $url;
                     }
-
                     $output['type'] = $type;
-
-                    $output['thumbnail'] = $html->find('.posterImage, img[data-qa=poster-image], .movie-thumbnail-wrap img', 0)->getAttribute("src");
+                    $output['thumbnail'] = $html->find('.movie-thumbnail-wrap rt-img, .media-scorecard rt-img', 0)->getAttribute("src");
+                    $output['cast'] = [];
 
                     $output['score'] = isset($obj->aggregateRating->ratingValue) ? (int)$obj->aggregateRating->ratingValue : null;
                     $output['votes'] = isset($obj->aggregateRating->ratingCount) ? (int)$obj->aggregateRating->ratingCount : null;
 
-                    $castContainer = "";
                     if ($type == "movie") {
+                        $output['summary'] = $this->cleanString($html->find("[data-qa=movie-info-synopsis]", 0)->text());
+
                         try {
                             $scoreDetailsJson = json_decode($html->find("#scoreDetails", 0)->innerText());
                             $output['user_score'] = $scoreDetailsJson->modal->audienceScoreAll->value;
@@ -148,45 +148,67 @@ class Rottentomatoes extends Base
                             $output['user_votes'] = null;
                         }
 
+                        if ($html->findOneOrFalse("#cast-and-crew .content-wrap .cast-and-crew-item")) {
+                            foreach ($html->find("#cast-and-crew .content-wrap .cast-and-crew-item") as $e) {
+                                $url = $e->find('a', 0)->getAttribute('href');
+                                $url_slug = str_replace("/celebrity/", "", $url);
+                                $name = $e->find('.metadata a p', 0)->text();
+                                $thumbnail = $e->find('img', 0)->getAttribute('src');
+                                if (str_contains($thumbnail, 'poster_default_thumbnail') or
+                                    str_contains($thumbnail, 'poster-default-thumbnail')) {
+                                    $thumbnail = null;
+                                }
+
+                                if (!empty($url_slug) and !empty($name)) {
+                                    $output['cast'][] = [
+                                        'name' => $this->cleanString($name),
+                                        'full_url' => $this->baseUrl . $this->cleanString($url),
+                                        'url_slug' => $this->cleanString($url_slug),
+                                        'thumbnail' => $this->cleanString($thumbnail)
+                                    ];
+                                }
+                            }
+                        }
+                    } elseif ($type == "tv") {
+                        $output['summary'] = $this->cleanString($html->find(".content-wrap .synopsis-wrap rt-text", 1)->text());
+
                         try {
-                            $output['user_score'] = $this->getNumbers($html->find("score-board", 0)->getAttribute('audiencescore'));
+                            $mediaScorecardJson = json_decode($html->find("#media-scorecard-json", 0)->innerText());
+                            $output['user_score'] = $this->getNumbers($mediaScorecardJson->audienceScore->score);
+                            $output['user_votes'] = $this->getNumbers($mediaScorecardJson->audienceScore->ratingCount);
                         } catch (Exception $exception) {
                             $output['user_score'] = null;
                             $output['user_votes'] = null;
                         }
 
-                        $castContainer = "#cast-and-crew .content-wrap .cast-and-crew-item";
-                    } elseif ($type == "tv") {
-                        $output['user_score'] = $this->getNumbers($html->find("score-board", 0)->getAttribute('audiencescore'));
-                        $output['user_votes'] = $this->getNumbers($html->find(".scoreboard__link--audience", 0)->text());
+                        // cast -> just 6
+                        try {
+                            $mediaScorecardJson = json_decode($html->find("#castAndCrewData", 0)->innerText());
 
-                        $castContainer = "#cast-and-crew .cast-wrap .cast-and-crew-item";
-                    }
+                            if ($mediaScorecardJson->people) {
+                                foreach ($mediaScorecardJson->people as $e) {
+                                    $url = $e->celebrityUrl;
+                                    $url_slug = str_replace("/celebrity/", "", $url);
+                                    $name = $e->name;
+                                    $thumbnail = $e->primaryImageUrl;
+                                    if (!$thumbnail) {
+                                        $thumbnail = null;
+                                    }
 
-                    $output['cast'] = [];
-                    if ($html->findOneOrFalse($castContainer)) {
-                        foreach ($html->find($castContainer) as $e) {
-                            $url = $e->find('a', 0)->getAttribute('href');
-                            $url_slug = str_replace("/celebrity/", "", $url);
-                            $name = $e->find('.metadata a p', 0)->text();
-                            $thumbnail = $e->find('img', 0)->getAttribute('src');
-                            if (str_contains($thumbnail, 'poster_default_thumbnail') or
-                                str_contains($thumbnail, 'poster-default-thumbnail')) {
-                                $thumbnail = null;
+                                    if (!empty($url_slug) and !empty($name)) {
+                                        $output['cast'][] = [
+                                            'name' => $this->cleanString($name),
+                                            'full_url' => $this->baseUrl . $this->cleanString($url),
+                                            'url_slug' => $this->cleanString($url_slug),
+                                            'thumbnail' => $this->cleanString($thumbnail)
+                                        ];
+                                    }
+                                }
                             }
+                        } catch (Exception $exception) {
 
-                            if (!empty($url_slug) and !empty($name)) {
-                                $output['cast'][] = [
-                                    'name' => $this->cleanString($name),
-                                    'full_url' => $this->baseUrl . $this->cleanString($url),
-                                    'url_slug' => $this->cleanString($url_slug),
-                                    'thumbnail' => $this->cleanString($thumbnail)
-                                ];
-                            }
                         }
                     }
-
-                    $output['summary'] = $this->cleanString($html->find("[data-qa=movie-info-synopsis]", 0)->text());
                 }
             }
         }
