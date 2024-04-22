@@ -22,13 +22,13 @@ class ExtractTest extends TestCase
         $this->assertGreaterThan(155, $result['result']['votes']);
 
         $this->assertGreaterThan(80, $result['result']['user_score']);
-        $this->assertGreaterThan(33324200, $result['result']['user_votes']);
+        $this->assertGreaterThan(1307880, $result['result']['user_votes']);
 
         $this->assertIsArray($result['result']['cast']);
-        $this->assertCount(32, $result['result']['cast']);
-        $this->assertEquals('Keanu Reeves', $result['result']['cast'][0]['name']);
-        $this->assertEquals('keanu_reeves', $result['result']['cast'][0]['url_slug']);
-        $this->assertEquals('https://resizing.flixster.com/thX_rK0KiBbsHU8zYoMxN9ipq7c=/100x120/v2/https://resizing.flixster.com/-XZAfHZM39UwaGJIFWKAE8fS0ak=/v3/t/assets/1443_v9_bc.jpg', $result['result']['cast'][0]['thumbnail']);
+        $this->assertCount(6, $result['result']['cast']);
+        $this->assertEquals('Keanu Reeves', $result['result']['cast'][2]['name']);
+        $this->assertEquals('keanu_reeves', $result['result']['cast'][2]['url_slug']);
+        $this->assertEquals('https://resizing.flixster.com/thX_rK0KiBbsHU8zYoMxN9ipq7c=/100x120/v2/https://resizing.flixster.com/-XZAfHZM39UwaGJIFWKAE8fS0ak=/v3/t/assets/1443_v9_bc.jpg', $result['result']['cast'][2]['thumbnail']);
 
         $this->assertNull($result['error']);
     }
@@ -50,7 +50,7 @@ class ExtractTest extends TestCase
         $this->assertGreaterThan(240, $result['result']['votes']);
 
         $this->assertGreaterThan(90, $result['result']['user_score']);
-        $this->assertGreaterThan(27000, $result['result']['user_votes']);
+        $this->assertGreaterThan(20000, $result['result']['user_votes']);
 
         $this->assertIsArray($result['result']['cast']);
         $this->assertCount(6, $result['result']['cast']);

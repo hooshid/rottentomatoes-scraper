@@ -119,6 +119,7 @@ class Rottentomatoes extends Base
 
             if (empty($error)) {
                 $obj = $this->jsonLD($response);
+                //print_r($obj);
                 if (!empty($obj)) {
                     $output['title'] = isset($obj->name) ? (string)$obj->name : null;
                     $output['full_url'] = isset($obj->url) ? (string)$obj->url : null;
@@ -132,28 +133,28 @@ class Rottentomatoes extends Base
                     $output['type'] = $type;
                     $output['thumbnail'] = $html->find('.movie-thumbnail-wrap rt-img, .media-scorecard rt-img', 0)->getAttribute("src");
                     $output['cast'] = [];
-
-                    $output['score'] = isset($obj->aggregateRating->ratingValue) ? (int)$obj->aggregateRating->ratingValue : null;
-                    $output['votes'] = isset($obj->aggregateRating->ratingCount) ? (int)$obj->aggregateRating->ratingCount : null;
+                    $output['summary'] = $obj->description ?? null;
 
                     if ($type == "movie") {
-                        $output['summary'] = $this->cleanString($html->find("[data-qa=movie-info-synopsis]", 0)->text());
-
                         try {
-                            $scoreDetailsJson = json_decode($html->find("#scoreDetails", 0)->innerText());
-                            $output['user_score'] = $scoreDetailsJson->modal->audienceScoreAll->value;
-                            $output['user_votes'] = $scoreDetailsJson->modal->audienceScoreAll->ratingCount;
+                            $scoreDetailsJson = json_decode($html->find("#media-scorecard-json", 0)->innerText());
+                            $output['score'] = isset($scoreDetailsJson->criticsScore->score) ? (int)$scoreDetailsJson->criticsScore->score : null;
+                            $output['votes'] = isset($scoreDetailsJson->criticsScore->reviewCount) ? (int)$scoreDetailsJson->criticsScore->reviewCount : null;
+                            $output['user_score'] = isset($scoreDetailsJson->audienceScore->score) ? (int)$scoreDetailsJson->audienceScore->score : null;
+                            $output['user_votes'] = isset($scoreDetailsJson->audienceScore->reviewCount) ? (int)$scoreDetailsJson->audienceScore->reviewCount : null;
                         } catch (Exception $exception) {
+                            $output['score'] = null;
+                            $output['votes'] = null;
                             $output['user_score'] = null;
                             $output['user_votes'] = null;
                         }
 
-                        if ($html->findOneOrFalse("#cast-and-crew .content-wrap .cast-and-crew-item")) {
-                            foreach ($html->find("#cast-and-crew .content-wrap .cast-and-crew-item") as $e) {
+                        if ($html->findOneOrFalse(".cast-and-crew .content-wrap a")) {
+                            foreach ($html->find(".cast-and-crew .content-wrap a") as $e) {
                                 $url = $e->find('a', 0)->getAttribute('href');
                                 $url_slug = str_replace("/celebrity/", "", $url);
-                                $name = $e->find('.metadata a p', 0)->text();
-                                $thumbnail = $e->find('img', 0)->getAttribute('src');
+                                $name = $e->find('.name', 0)->text();
+                                $thumbnail = $e->find('rt-img', 0)->getAttribute('src');
                                 if (str_contains($thumbnail, 'poster_default_thumbnail') or
                                     str_contains($thumbnail, 'poster-default-thumbnail')) {
                                     $thumbnail = null;
@@ -170,19 +171,20 @@ class Rottentomatoes extends Base
                             }
                         }
                     } elseif ($type == "tv") {
-                        $output['summary'] = $this->cleanString($html->find(".content-wrap .synopsis-wrap rt-text", 1)->text());
-
                         try {
-                            $mediaScorecardJson = json_decode($html->find("#media-scorecard-json", 0)->innerText());
-                            $output['user_score'] = $this->getNumbers($mediaScorecardJson->audienceScore->score);
-                            $output['user_votes'] = $this->getNumbers($mediaScorecardJson->audienceScore->ratingCount);
+                            $scoreDetailsJson = json_decode($html->find("#media-scorecard-json", 0)->innerText());
+                            $output['score'] = isset($scoreDetailsJson->criticsScore->score) ? (int)$scoreDetailsJson->criticsScore->score : null;
+                            $output['votes'] = isset($scoreDetailsJson->criticsScore->reviewCount) ? (int)$scoreDetailsJson->criticsScore->reviewCount : null;
+                            $output['user_score'] = isset($scoreDetailsJson->audienceScore->score) ? (int)$scoreDetailsJson->audienceScore->score : null;
+                            $output['user_votes'] = $this->getNumbers($scoreDetailsJson->audienceScore->bandedRatingCount);
                         } catch (Exception $exception) {
+                            $output['score'] = null;
+                            $output['votes'] = null;
                             $output['user_score'] = null;
                             $output['user_votes'] = null;
                         }
 
-                        // cast -> just 6
-                        // TODO if could load all credits !
+                        // cast
                         try {
                             $mediaScorecardJson = json_decode($html->find("#castAndCrewData", 0)->innerText());
 
