@@ -15,7 +15,7 @@ class SearchTest extends TestCase
 
         $this->assertEquals('https://www.rottentomatoes.com/m/spider_man_far_from_home', $result['result'][0]['full_url']);
         $this->assertEquals('spider_man_far_from_home', $result['result'][0]['url_slug']);
-        $this->assertEquals('https://resizing.flixster.com/cPqcY0t8DVtIbfSb7HdHOtz4aKQ=/fit-in/80x126/v2/https://resizing.flixster.com/-XZAfHZM39UwaGJIFWKAE8fS0ak=/v3/t/NowShowing/177946/177946_aa.jpg', $result['result'][0]['thumbnail']);
+        $this->assertEquals('https://resizing.flixster.com/Rn71v_leWc5l2j938mr6QL7bJJk=/fit-in/80x126/v2/https://resizing.flixster.com/Fc1FZrej9A-GYxYP3boYzqIQ9Tk=/ems.cHJkLWVtcy1hc3NldHMvbW92aWVzLzRmYzI5Yzc5LWI1NDUtNDk5OC1hNjBkLTRlNGNhZTRjNWE4OS53ZWJw', $result['result'][0]['thumbnail']);
         $this->assertEquals('movie', $result['result'][0]['type']);
         $this->assertEquals('Spider-Man: Far From Home', $result['result'][0]['title']);
         $this->assertEquals(2019, $result['result'][0]['year']);
