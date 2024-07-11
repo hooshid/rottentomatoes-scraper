@@ -155,8 +155,8 @@ class Rottentomatoes extends Base
                                 $url_slug = str_replace("/celebrity/", "", $url);
                                 $name = $e->find('.name', 0)->text();
                                 $thumbnail = $e->find('rt-img', 0)->getAttribute('src');
-                                if (str_contains($thumbnail, 'poster_default_thumbnail') or
-                                    str_contains($thumbnail, 'poster-default-thumbnail')) {
+                                if (strpos($thumbnail, 'poster_default_thumbnail') !== false or
+                                    strpos($thumbnail, 'poster-default-thumbnail') !== false) {
                                     $thumbnail = null;
                                 }
 

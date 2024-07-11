@@ -8,39 +8,45 @@ class CelebrityTest extends TestCase
     public function testCelebrity()
     {
         $search = new Rottentomatoes();
-        $result = $search->celebrity('sam_worthington');
+        $result = $search->celebrity('tom_cruise');
         $this->assertIsArray($result);
         $this->assertCount(7, $result['result']);
         $this->assertNull($result['error']);
 
-        $this->assertEquals('Sam Worthington', $result['result']['name']);
-        $this->assertEquals('https://www.rottentomatoes.com/celebrity/sam_worthington', $result['result']['full_url']);
-        $this->assertEquals('sam_worthington', $result['result']['url_slug']);
-        $this->assertEquals('https://resizing.flixster.com/YNQWv9Xxaim-CGARtg9ptCT8e9I=/218x280/v2/https://resizing.flixster.com/-XZAfHZM39UwaGJIFWKAE8fS0ak=/v3/t/assets/218027_v9_bc.jpg', $result['result']['thumbnail']);
-        $this->assertGreaterThan(900, strlen($result['result']['bio']));
+        $this->assertEquals('Tom Cruise', $result['result']['name']);
+        $this->assertEquals('https://www.rottentomatoes.com/celebrity/tom_cruise', $result['result']['full_url']);
+        $this->assertEquals('tom_cruise', $result['result']['url_slug']);
+        $this->assertEquals('https://resizing.flixster.com/aKZD0ZOIIhT1YuBxFNJxe20iqYM=/218x280/v2/https://resizing.flixster.com/vpi-xtSdBvad3lgHJ9aMFwnZXNo=/ems.cHJkLWVtcy1hc3NldHMvY2VsZWJyaXRpZXMvMmYxODg5MzMtODE3MS00ZTI2LThmYmYtZGVmMzE4MmI3MjRiLmpwZw==', $result['result']['thumbnail']);
+        $this->assertGreaterThan(3500, strlen($result['result']['bio']));
 
         $this->assertIsArray($result['result']['movies']);
         $this->assertIsArray($result['result']['series']);
 
         // movie data
         foreach ($result['result']['movies'] as $movie) {
-            if ($movie['title'] == "Avatar") {
-                $this->assertEquals('Avatar', $movie['title']);
-                $this->assertEquals('/m/avatar', $movie['url']);
-                $this->assertEquals('2009', $movie['year']);
-                $this->assertGreaterThan(80, $movie['tomatometer']);
-                $this->assertGreaterThan(80, $movie['audiencescore']);
+            if ($movie['title'] == "Mission: Impossible - Dead Reckoning Part One") {
+                $this->assertEquals('Mission: Impossible - Dead Reckoning Part One', $movie['title']);
+                $this->assertEquals('/m/mission_impossible_dead_reckoning_part_one', $movie['url']);
+                $this->assertEquals('2023', $movie['year']);
+                $this->assertGreaterThan(90, $movie['tomatometer']);
+                $this->assertGreaterThan(90, $movie['audiencescore']);
+            } else if ($movie['title'] == "Taps") {
+                $this->assertEquals('Taps', $movie['title']);
+                $this->assertEquals('/m/taps', $movie['url']);
+                $this->assertEquals('1981', $movie['year']);
+                $this->assertGreaterThan(60, $movie['tomatometer']);
+                $this->assertGreaterThan(60, $movie['audiencescore']);
             }
         }
 
         // series data
         foreach ($result['result']['series'] as $serial) {
-            if ($serial['title'] == "JAG") {
-                $this->assertEquals('JAG', $serial['title']);
-                $this->assertEquals('/tv/jag', $serial['url']);
-                $this->assertEquals('2000', $serial['year']);
+            if ($serial['title'] == "Top Gear") {
+                $this->assertEquals('Top Gear', $serial['title']);
+                $this->assertEquals('/tv/top-gear', $serial['url']);
+                $this->assertEquals('2010', $serial['year']);
                 $this->assertNull($serial['tomatometer']);
-                $this->assertLessThan(40, $serial['audiencescore']);
+                $this->assertLessThan(70, $serial['audiencescore']);
             }
         }
     }

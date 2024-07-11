@@ -39,12 +39,12 @@
         <h2 class="text-center pb-30">Extract data</h2>
 
         <div class="menu-links">
-            <a href="/example/extract.php?url=/m/matrix">The Matrix (1999) - Movie</a>
-            <a href="/example/extract.php?url=/m/avatar">Avatar (2009) - Movie</a>
-            <a href="/example/extract.php?url=/tv/game_of_thrones">Game of Thrones - TV Series</a>
-            <a href="/example/extract.php?url=/tv/the_blacklist">The Blacklist - TV Series</a>
-            <a href="/example/celebrity.php?url=johnny_depp">Johnny Depp - Celebrity</a>
-            <a href="/example/celebrity.php?url=sam_worthington">Sam Worthington - Celebrity</a>
+            <a href="/example/extract.php?url=/m/matrix">Movie: The Matrix (1999)</a>
+            <a href="/example/extract.php?url=/m/avatar">Movie: Avatar (2009)</a>
+            <a href="/example/extract.php?url=/tv/game_of_thrones">TV Series: Game of Thrones</a>
+            <a href="/example/extract.php?url=/tv/the_blacklist">TV Series: The Blacklist</a>
+            <a href="/example/celebrity.php?url=johnny_depp">Celebrity: Johnny Depp</a>
+            <a href="/example/celebrity.php?url=emma_watson">Celebrity: Emma Watson</a>
         </div>
     </div>
 </div>

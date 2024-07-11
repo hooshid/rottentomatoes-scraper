@@ -1,6 +1,6 @@
 # Rottentomatoes Scraper
 
-<a href="https://github.com/hooshid/rottentomatoes-scraper/actions"><img src="https://github.com/hooshid/rottentomatoes-scraper/workflows/tests/badge.svg" alt="Build Status"></a>
+<a href="https://github.com/hooshid/rottentomatoes-scraper/actions"><img src="https://github.com/hooshid/rottentomatoes-scraper/actions/workflows/tests.yml/badge.svg" alt="Build Status"></a>
 <a href="https://packagist.org/packages/hooshid/rottentomatoes-scraper"><img src="https://img.shields.io/packagist/dt/hooshid/rottentomatoes-scraper" alt="Total Downloads"></a>
 <a href="https://packagist.org/packages/hooshid/rottentomatoes-scraper"><img src="https://img.shields.io/packagist/v/hooshid/rottentomatoes-scraper" alt="Latest Stable Version"></a>
 <a href="LICENSE.md"><img src="https://img.shields.io/packagist/l/hooshid/rottentomatoes-scraper" alt="License"></a>
