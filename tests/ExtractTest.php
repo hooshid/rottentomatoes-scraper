@@ -25,7 +25,7 @@ class ExtractTest extends TestCase
         $this->assertGreaterThan(1307880, $result['result']['user_votes']);
 
         $this->assertIsArray($result['result']['cast']);
-        $this->assertCount(6, $result['result']['cast']);
+        $this->assertCount(36, $result['result']['cast']);
         $this->assertEquals('Keanu Reeves', $result['result']['cast'][2]['name']);
         $this->assertEquals('keanu_reeves', $result['result']['cast'][2]['url_slug']);
         $this->assertEquals('https://resizing.flixster.com/thX_rK0KiBbsHU8zYoMxN9ipq7c=/100x120/v2/https://resizing.flixster.com/-XZAfHZM39UwaGJIFWKAE8fS0ak=/v3/t/assets/1443_v9_bc.jpg', $result['result']['cast'][2]['thumbnail']);
@@ -53,7 +53,7 @@ class ExtractTest extends TestCase
         $this->assertGreaterThan(20000, $result['result']['user_votes']);
 
         $this->assertIsArray($result['result']['cast']);
-        $this->assertCount(6, $result['result']['cast']);
+        $this->assertCount(18, $result['result']['cast']);
         $this->assertEquals('Vince Gilligan', $result['result']['cast'][0]['name']);
         $this->assertEquals('vince_gilligan', $result['result']['cast'][0]['url_slug']);
         $this->assertEquals('https://resizing.flixster.com/-KptjO4A26O20_TY102wK1E8wAY=/100x120/v2/https://resizing.flixster.com/-XZAfHZM39UwaGJIFWKAE8fS0ak=/v3/t/assets/255299_v9_bc.jpg', $result['result']['cast'][0]['thumbnail']);

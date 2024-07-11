@@ -135,66 +135,74 @@ class Rottentomatoes extends Base
                     $output['cast'] = [];
                     $output['summary'] = $obj->description ?? null;
 
-                    if ($type == "movie") {
-                        try {
-                            $scoreDetailsJson = json_decode($html->find("#media-scorecard-json", 0)->innerText());
-                            $output['score'] = isset($scoreDetailsJson->criticsScore->score) ? (int)$scoreDetailsJson->criticsScore->score : null;
-                            $output['votes'] = isset($scoreDetailsJson->criticsScore->reviewCount) ? (int)$scoreDetailsJson->criticsScore->reviewCount : null;
-                            $output['user_score'] = isset($scoreDetailsJson->audienceScore->score) ? (int)$scoreDetailsJson->audienceScore->score : null;
-                            $output['user_votes'] = isset($scoreDetailsJson->audienceScore->reviewCount) ? (int)$scoreDetailsJson->audienceScore->reviewCount : null;
-                        } catch (Exception $exception) {
-                            $output['score'] = null;
-                            $output['votes'] = null;
-                            $output['user_score'] = null;
-                            $output['user_votes'] = null;
-                        }
-
-                        if ($html->findOneOrFalse(".cast-and-crew .content-wrap a")) {
-                            foreach ($html->find(".cast-and-crew .content-wrap a") as $e) {
-                                $url = $e->find('a', 0)->getAttribute('href');
-                                $url_slug = str_replace("/celebrity/", "", $url);
-                                $name = $e->find('.name', 0)->text();
-                                $thumbnail = $e->find('rt-img', 0)->getAttribute('src');
-                                if (strpos($thumbnail, 'poster_default_thumbnail') !== false or
-                                    strpos($thumbnail, 'poster-default-thumbnail') !== false) {
-                                    $thumbnail = null;
-                                }
-
-                                if (!empty($url_slug) and !empty($name)) {
-                                    $output['cast'][] = [
-                                        'name' => $this->cleanString($name),
-                                        'full_url' => $this->baseUrl . $this->cleanString($url),
-                                        'url_slug' => $this->cleanString($url_slug),
-                                        'thumbnail' => $this->cleanString($thumbnail)
-                                    ];
-                                }
-                            }
-                        }
-                    } elseif ($type == "tv") {
-                        try {
-                            $scoreDetailsJson = json_decode($html->find("#media-scorecard-json", 0)->innerText());
-                            $output['score'] = isset($scoreDetailsJson->criticsScore->score) ? (int)$scoreDetailsJson->criticsScore->score : null;
-                            $output['votes'] = isset($scoreDetailsJson->criticsScore->reviewCount) ? (int)$scoreDetailsJson->criticsScore->reviewCount : null;
-                            $output['user_score'] = isset($scoreDetailsJson->audienceScore->score) ? (int)$scoreDetailsJson->audienceScore->score : null;
+                    try {
+                        $scoreDetailsJson = json_decode($html->find("#media-scorecard-json", 0)->innerText());
+                        $output['score'] = isset($scoreDetailsJson->criticsScore->score) ? (int)$scoreDetailsJson->criticsScore->score : null;
+                        $output['votes'] = isset($scoreDetailsJson->criticsScore->reviewCount) ? (int)$scoreDetailsJson->criticsScore->reviewCount : null;
+                        $output['user_score'] = isset($scoreDetailsJson->audienceScore->score) ? (int)$scoreDetailsJson->audienceScore->score : null;
+                        if ($type == "tv") {
                             $output['user_votes'] = $this->getNumbers($scoreDetailsJson->audienceScore->bandedRatingCount);
-                        } catch (Exception $exception) {
-                            $output['score'] = null;
-                            $output['votes'] = null;
-                            $output['user_score'] = null;
-                            $output['user_votes'] = null;
+                        } else {
+                            $output['user_votes'] = isset($scoreDetailsJson->audienceScore->reviewCount) ? (int)$scoreDetailsJson->audienceScore->reviewCount : null;
                         }
+                    } catch (Exception $exception) {
+                        $output['score'] = null;
+                        $output['votes'] = null;
+                        $output['user_score'] = null;
+                        $output['user_votes'] = null;
+                    }
 
-                        // cast
-                        try {
-                            $mediaScorecardJson = json_decode($html->find("#castAndCrewData", 0)->innerText());
+                    // cast
+                    try {
+                        // find emsId and load cast and crew from api
+                        $castAndCrewDataJson = json_decode($html->find("#castAndCrewData", 0)->innerText());
 
-                            if ($mediaScorecardJson->people) {
-                                foreach ($mediaScorecardJson->people as $e) {
+                        if (!empty($castAndCrewDataJson) and !empty($castAndCrewDataJson->emsId)) {
+                            if ($type == "tv") {
+                                $apiType = "TvSeries";
+                            } else {
+                                $apiType = "Movie";
+                            }
+                            $responseCastAndCrewData = $this->getContentPage($this->baseUrl . "/napi/modules/cast-and-crew/".$apiType."/" . $castAndCrewDataJson->emsId);
+
+                            $responseJson = json_decode($responseCastAndCrewData);
+                            if ($responseJson->contentData->people) {
+                                foreach ($responseJson->contentData->people as $e) {
                                     $url = $e->celebrityUrl;
                                     $url_slug = str_replace("/celebrity/", "", $url);
                                     $name = $e->name;
                                     $thumbnail = $e->primaryImageUrl;
                                     if (!$thumbnail) {
+                                        $thumbnail = null;
+                                    }
+
+                                    if (!empty($url_slug) and !empty($name)) {
+                                        $output['cast'][] = [
+                                            'name' => $this->cleanString($name),
+                                            'full_url' => $this->baseUrl . $this->cleanString($url),
+                                            'url_slug' => $this->cleanString($url_slug),
+                                            'thumbnail' => $this->cleanString($thumbnail)
+                                        ];
+                                    }
+                                }
+                            }
+                        }
+                    } catch (\Exception $e) {
+                    }
+
+                    if (empty($output['cast'])) {
+                        try {
+                            $castAndCrewDataJson = json_decode($html->find("#castAndCrewData", 0)->innerText());
+
+                            if ($castAndCrewDataJson->people) {
+                                foreach ($castAndCrewDataJson->people as $e) {
+                                    $url = $e->celebrityUrl;
+                                    $url_slug = str_replace("/celebrity/", "", $url);
+                                    $name = $e->name;
+                                    $thumbnail = $e->primaryImageUrl;
+                                    if (empty($thumbnail)
+                                        or strpos($thumbnail, 'poster_default_thumbnail') !== false
+                                        or strpos($thumbnail, 'poster-default-thumbnail') !== false) {
                                         $thumbnail = null;
                                     }
 

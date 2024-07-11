@@ -331,3 +331,7 @@ a {
     min-height: 180px;
     vertical-align: top;
 }
+
+.celebrity-box img {
+    max-width: 100%;
+}
