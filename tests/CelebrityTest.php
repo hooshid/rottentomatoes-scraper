@@ -51,6 +51,36 @@ class CelebrityTest extends TestCase
         }
     }
 
+    public function testCelebrity2()
+    {
+        $search = new Rottentomatoes();
+        $result = $search->celebrity('gore_verbinski');
+        $this->assertIsArray($result);
+        $this->assertCount(7, $result['result']);
+        $this->assertNull($result['error']);
+
+        $this->assertEquals('Gore Verbinski', $result['result']['name']);
+        $this->assertEquals('https://www.rottentomatoes.com/celebrity/gore_verbinski', $result['result']['full_url']);
+        $this->assertEquals('gore_verbinski', $result['result']['url_slug']);
+        $this->assertEquals('https://resizing.flixster.com/9cIM1xFYnFpWZaDMW2k5Wu7V5gQ=/218x280/v2/https://resizing.flixster.com/-XZAfHZM39UwaGJIFWKAE8fS0ak=/v3/t/assets/74174_v9_bb.jpg', $result['result']['thumbnail']);
+        $this->assertGreaterThan(500, strlen($result['result']['bio']));
+
+        $this->assertIsArray($result['result']['movies']);
+        $this->assertIsArray($result['result']['series']);
+        $this->assertEmpty($result['result']['series']);
+
+        // movie data
+        foreach ($result['result']['movies'] as $movie) {
+            if ($movie['title'] == "Rango") {
+                $this->assertEquals('Rango', $movie['title']);
+                $this->assertEquals('/m/rango', $movie['url']);
+                $this->assertEquals('2011', $movie['year']);
+                $this->assertGreaterThan(50, $movie['tomatometer']);
+                $this->assertGreaterThan(50, $movie['audiencescore']);
+            }
+        }
+    }
+
     public function testCelebrityNotFound()
     {
         $search = new Rottentomatoes();
