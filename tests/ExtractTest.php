@@ -25,7 +25,7 @@ class ExtractTest extends TestCase
         $this->assertGreaterThan(1307880, $result['result']['user_votes']);
 
         $this->assertIsArray($result['result']['cast']);
-        $this->assertCount(36, $result['result']['cast']);
+        $this->assertCount(35, $result['result']['cast']);
         $this->assertEquals('Keanu Reeves', $result['result']['cast'][2]['name']);
         $this->assertEquals('keanu_reeves', $result['result']['cast'][2]['url_slug']);
         $this->assertEquals('https://resizing.flixster.com/thX_rK0KiBbsHU8zYoMxN9ipq7c=/100x120/v2/https://resizing.flixster.com/-XZAfHZM39UwaGJIFWKAE8fS0ak=/v3/t/assets/1443_v9_bc.jpg', $result['result']['cast'][2]['thumbnail']);

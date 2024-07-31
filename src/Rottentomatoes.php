@@ -176,7 +176,7 @@ class Rottentomatoes extends Base
                                         $thumbnail = null;
                                     }
 
-                                    if (!empty($url_slug) and !empty($name)) {
+                                    if (!empty($url_slug) and !empty($name) and $url_slug != "undefined" and $url_slug != "null") {
                                         $output['cast'][] = [
                                             'name' => $this->cleanString($name),
                                             'full_url' => $this->baseUrl . $this->cleanString($url),
@@ -206,7 +206,7 @@ class Rottentomatoes extends Base
                                         $thumbnail = null;
                                     }
 
-                                    if (!empty($url_slug) and !empty($name)) {
+                                    if (!empty($url_slug) and !empty($name) and $url_slug != "undefined" and $url_slug != "null") {
                                         $output['cast'][] = [
                                             'name' => $this->cleanString($name),
                                             'full_url' => $this->baseUrl . $this->cleanString($url),
