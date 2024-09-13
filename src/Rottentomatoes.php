@@ -254,9 +254,13 @@ class Rottentomatoes extends Base
 
             if (empty($error)) {
                 $obj = $this->jsonLD($response);
-                if (!empty($obj)) {
+                if(empty($obj->url)){
+                    $error = 404;
+                }
+               else if (!empty($obj)) {
                     $output['name'] = isset($obj->name) ? (string)$obj->name : null;
                     $output['full_url'] = isset($obj->url) ? (string)$obj->url : null;
+                    print_r($obj);
                     if (stripos($obj->url, "https://") === false) {
                         $output['full_url'] = $this->baseUrl . $obj->url;
                     }

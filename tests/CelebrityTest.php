@@ -90,4 +90,14 @@ class CelebrityTest extends TestCase
         $this->assertEmpty($result['result']);
         $this->assertEquals(404, $result['error']);
     }
+
+    public function testCelebrityInFinished()
+    {
+        $search = new Rottentomatoes();
+        $result = $search->celebrity('bruce_meyers');
+
+        $this->assertIsArray($result);
+        $this->assertEmpty($result['result']);
+        $this->assertEquals(404, $result['error']);
+    }
 }
