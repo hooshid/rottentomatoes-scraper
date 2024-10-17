@@ -109,7 +109,6 @@ if($result['result']) {
     echo $result['result']['full_url'];
     echo $result['result']['url_slug'];
     echo $result['result']['thumbnail'];
-    echo $result['result']['bio'];
     // Movies : array
     foreach ($result['result']['movies'] as $row) {
         echo $row['title'];

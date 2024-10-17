@@ -265,8 +265,6 @@ class Rottentomatoes extends Base
                     }
                     $output['url_slug'] = $this->afterLast($obj->url);
                     $output['thumbnail'] = $html->find('.celebrity-bio__hero-img', 0)->getAttribute("src");
-                    $output['bio'] = $this->cleanString($html->find(".celebrity-bio__summary", 0)->text());
-
 
                     $output['movies'] = [];
                     if ($html->findOneOrFalse("[data-qa='celebrity-filmography-movies']")) {
