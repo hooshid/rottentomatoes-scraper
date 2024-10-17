@@ -75,14 +75,6 @@ if (isset($_GET["output"])) {
                             </tr>
                         <?php } ?>
 
-                        <!-- Bio -->
-                        <?php if ($result['bio']) { ?>
-                            <tr>
-                                <td><b>Bio:</b></td>
-                                <td><?php echo $result['bio']; ?></td>
-                            </tr>
-                        <?php } ?>
-
                         <!-- Movies -->
                         <?php if ($result['movies']) { ?>
                             <tr>
