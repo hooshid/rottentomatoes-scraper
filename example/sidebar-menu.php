@@ -16,3 +16,4 @@
 <a href="celebrity.php?url=peter_dinklage">Peter Dinklage</a>
 <a href="celebrity.php?url=emilia_clarke">Emilia Clarke</a>
 <a href="celebrity.php?url=emma_watson">Emma Watson</a>
+<a href="celebrity.php?url=bryan_cranston">Bryan Cranston</a>

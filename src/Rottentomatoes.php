@@ -119,7 +119,6 @@ class Rottentomatoes extends Base
 
             if (empty($error)) {
                 $obj = $this->jsonLD($response);
-                //print_r($obj);
                 if (!empty($obj)) {
                     $output['title'] = isset($obj->name) ? (string)$obj->name : null;
                     $output['full_url'] = isset($obj->url) ? (string)$obj->url : null;
@@ -163,7 +162,7 @@ class Rottentomatoes extends Base
                             } else {
                                 $apiType = "Movie";
                             }
-                            $responseCastAndCrewData = $this->getContentPage($this->baseUrl . "/napi/modules/cast-and-crew/".$apiType."/" . $castAndCrewDataJson->emsId);
+                            $responseCastAndCrewData = $this->getContentPage($this->baseUrl . "/cnapi/modules/cast-and-crew/" . $apiType . "/" . $castAndCrewDataJson->emsId);
 
                             $responseJson = json_decode($responseCastAndCrewData);
                             if ($responseJson->contentData->people) {
@@ -254,60 +253,82 @@ class Rottentomatoes extends Base
 
             if (empty($error)) {
                 $obj = $this->jsonLD($response);
-                if(empty($obj->url)){
+                if (empty($obj->url)) {
                     $error = 404;
-                }
-               else if (!empty($obj)) {
+                } else if (!empty($obj)) {
                     $output['name'] = isset($obj->name) ? (string)$obj->name : null;
-                    $output['full_url'] = isset($obj->url) ? (string)$obj->url : null;
+                    $output['full_url'] = (string)$obj->url;
                     if (stripos($obj->url, "https://") === false) {
                         $output['full_url'] = $this->baseUrl . $obj->url;
                     }
                     $output['url_slug'] = $this->afterLast($obj->url);
                     $output['thumbnail'] = $html->find('.celebrity-bio__hero-img', 0)->getAttribute("src");
 
+                    $emsId = null;
+                    try {
+                        $curation = $html->find('#curation-json', 0)->innerText();
+                        $emsId = json_decode($curation);
+                        $emsId = $emsId->emsId;
+                    } catch (\Exception $e) {
+
+                    }
+
                     $output['movies'] = [];
-                    if ($html->findOneOrFalse("[data-qa='celebrity-filmography-movies']")) {
-                        foreach ($html->find("[data-qa='celebrity-filmography-movies'] .celebrity-filmography__tbody tr") as $e) {
-                            $url = $e->find('.celebrity-filmography__title a', 0)->getAttribute('href');
-                            $title = $e->find('.celebrity-filmography__title a', 0)->text();
-                            $year = $e->find('.celebrity-filmography__year', 0)->text();
+                    $output['series'] = [];
+                    if ($emsId != null) {
+                        $getMovies = $this->getContentPage($this->baseUrl . "/cnapi/modules/filmography/$emsId/movie/newest?pageCount=500");
+                        $data = json_decode($getMovies, true);
+                        if (isset($data['media']) && is_array($data['media'])) {
+                            foreach ($data['media'] as $media) {
+                                $title = $media['title'] ?? '';
+                                $url = $media['titleUrl'] ?? '';
+                                $year = $media['yearsFeatured'] ?? '';
 
-                            $tomatometer = $this->cleanString($e->getAttribute('data-tomatometer'));
-                            $audiencescore = $this->cleanString($e->getAttribute('data-audiencescore'));
+                                // Extract audience score and tomatometer score
+                                $tomatometerScore = $media['tomatometerScore']['score'] ?? null;
+                                $audienceScore = $media['audienceScore']['score'] ?? null;
 
-                            if (!empty($url) and !empty($title)) {
-                                $output['movies'][] = [
-                                    'title' => $this->cleanString($title),
-                                    'url' => $this->cleanString($url),
-                                    'year' => $this->cleanString($year),
-                                    'tomatometer' => $tomatometer ? (int)$tomatometer : null,
-                                    'audiencescore' => $audiencescore ? (int)$audiencescore : null
-                                ];
+                                if (!empty($title) && !empty($url)) {
+                                    $output['movies'][] = [
+                                        'title' => $this->cleanString($title),
+                                        'url' => $this->cleanString($url),
+                                        'year' => $this->cleanString($year),
+                                        'tomatometer' => $tomatometerScore ? (int)$tomatometerScore : null,
+                                        'audiencescore' => $audienceScore ? (int)$audienceScore : null
+                                    ];
+                                }
                             }
                         }
-                    }
-                    $output['series'] = [];
-                    if ($html->findOneOrFalse("[data-qa='celebrity-filmography-tv']")) {
-                        foreach ($html->find("[data-qa='celebrity-filmography-tv'] .celebrity-filmography__tbody tr") as $e) {
-                            $url = $e->find('.celebrity-filmography__title a', 0)->getAttribute('href');
-                            $title = $e->find('.celebrity-filmography__title a', 0)->text();
-                            $year = $e->find('.celebrity-filmography__year', 0)->text();
-                            $year = str_replace("\n", "-", $year);
-                            $year = str_replace(" ", "", $year);
-                            $year = str_replace("--", "-", $year);
 
-                            $tomatometer = $this->cleanString($e->getAttribute('data-tomatometer'));
-                            $audiencescore = $this->cleanString($e->getAttribute('data-audiencescore'));
 
-                            if (!empty($url) and !empty($title)) {
-                                $output['series'][] = [
-                                    'title' => $this->cleanString($title),
-                                    'url' => $this->cleanString($url),
-                                    'year' => trim($year),
-                                    'tomatometer' => $tomatometer ? (int)$tomatometer : null,
-                                    'audiencescore' => $audiencescore ? (int)$audiencescore : null
-                                ];
+                        $getSeries = $this->getContentPage($this->baseUrl . "/cnapi/modules/filmography/$emsId/tv/newest?pageCount=500");
+                        $data = json_decode($getSeries, true);
+                        if (isset($data['media']) && is_array($data['media'])) {
+                            foreach ($data['media'] as $media) {
+                                $title = $media['title'] ?? '';
+                                $url = $media['titleUrl'] ?? '';
+                                $year = $media['yearsFeatured'] ?? '';
+                                $year = str_replace("(", "", $year);
+                                $year = str_replace(")", "", $year);
+                                $year = str_replace("-Present", "", $year);
+                                $year = str_replace(", ", "-", $year);
+                                $year = str_replace("\n", "-", $year);
+                                $year = str_replace(" ", "", $year);
+                                $year = str_replace("--", "-", $year);
+
+                                // Extract audience score and tomatometer score
+                                $tomatometerScore = $media['tomatometerScore']['score'] ?? null;
+                                $audienceScore = $media['audienceScore']['score'] ?? null;
+
+                                if (!empty($title) && !empty($url)) {
+                                    $output['series'][] = [
+                                        'title' => $this->cleanString($title),
+                                        'url' => $this->cleanString($url),
+                                        'year' => trim($year),
+                                        'tomatometer' => $tomatometerScore ? (int)$tomatometerScore : null,
+                                        'audiencescore' => $audienceScore ? (int)$audienceScore : null
+                                    ];
+                                }
                             }
                         }
                     }
