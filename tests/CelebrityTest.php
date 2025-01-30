@@ -5,7 +5,7 @@ use PHPUnit\Framework\TestCase;
 
 class CelebrityTest extends TestCase
 {
-    public function testCelebrity()
+    public function testCelebrityTomCruise()
     {
         $search = new Rottentomatoes();
         $result = $search->celebrity('tom_cruise');
@@ -84,7 +84,7 @@ class CelebrityTest extends TestCase
         }
     }
 
-    public function testCelebrity2()
+    public function testCelebrityBryanCranston()
     {
         $search = new Rottentomatoes();
         $result = $search->celebrity('bryan_cranston');
