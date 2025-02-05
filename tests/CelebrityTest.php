@@ -191,6 +191,16 @@ class CelebrityTest extends TestCase
         $this->assertEmpty($result['result']['series']);
     }
 
+    public function testCelebrityBranislavLecic()
+    {
+        $search = new Rottentomatoes();
+        $result = $search->celebrity('branislav_lecic');
+
+        $this->assertIsArray($result);
+        $this->assertEmpty($result['result']);
+        $this->assertEquals(404, $result['error']);
+    }
+
     public function testCelebrityNotFound()
     {
         $search = new Rottentomatoes();
