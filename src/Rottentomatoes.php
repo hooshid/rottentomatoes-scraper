@@ -332,6 +332,19 @@ class Rottentomatoes extends Base
                             }
                         }
                     }
+
+                    if (count($output['movies']) == 0 && count($output['series']) == 0) {
+                        $bioHighestRated = $html->find('[data-qa="celebrity-bio-highest-rated"]', 0)->text();
+                        $bioLowestRated = $html->find('[data-qa="celebrity-bio-lowest-rated"]', 0)->text();
+                        $bioBDay = $html->find('[data-qa="celebrity-bio-bday"]', 0)->text();
+
+                        if (trim(preg_replace("/\s+/", " ", $bioHighestRated)) == "Highest Rated: Not Available" &&
+                            trim(preg_replace("/\s+/", " ", $bioLowestRated)) == "Lowest Rated: Not Available" &&
+                            trim(preg_replace("/\s+/", " ", $bioBDay)) == "Birthday: Not Available") {
+                            $output = [];
+                            $error = 404;
+                        }
+                    }
                 }
             }
         }
