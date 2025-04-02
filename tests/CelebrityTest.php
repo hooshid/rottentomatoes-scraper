@@ -138,7 +138,7 @@ class CelebrityTest extends TestCase
             if ($serial['title'] == "Your Honor") {
                 $this->assertEquals('Your Honor', $serial['title']);
                 $this->assertEquals('/tv/your_honor_2020', $serial['url']);
-                $this->assertEquals('2020-2021-2023', $serial['year']);
+                $this->assertEquals('2020-2021-2023-2025', $serial['year']);
                 $this->assertEquals(49, $serial['tomatometer']);
                 $this->assertEquals(68, $serial['audiencescore']);
             } elseif ($serial['title'] == "Breaking Bad") {
