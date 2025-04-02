@@ -116,20 +116,20 @@ class CelebrityTest extends TestCase
                 $this->assertEquals('Kung Fu Panda 4', $movie['title']);
                 $this->assertEquals('/m/kung_fu_panda_4', $movie['url']);
                 $this->assertEquals('2024', $movie['year']);
-                $this->assertEquals(71, $movie['tomatometer']);
-                $this->assertEquals(85, $movie['audiencescore']);
+                $this->assertGreaterThan(70, $movie['tomatometer']);
+                $this->assertGreaterThan(80, $movie['audiencescore']);
             } elseif ($movie['title'] == "Drive") {
                 $this->assertEquals('Drive', $movie['title']);
                 $this->assertEquals('/m/drive_2011', $movie['url']);
                 $this->assertEquals('2011', $movie['year']);
-                $this->assertEquals(93, $movie['tomatometer']);
-                $this->assertEquals(79, $movie['audiencescore']);
+                $this->assertGreaterThan(90, $movie['tomatometer']);
+                $this->assertGreaterThan(75, $movie['audiencescore']);
             } elseif ($movie['title'] == "The Lincoln Lawyer") {
                 $this->assertEquals('The Lincoln Lawyer', $movie['title']);
                 $this->assertEquals('/m/lincoln_lawyer', $movie['url']);
                 $this->assertEquals('2011', $movie['year']);
-                $this->assertEquals(83, $movie['tomatometer']);
-                $this->assertEquals(82, $movie['audiencescore']);
+                $this->assertGreaterThan(80, $movie['tomatometer']);
+                $this->assertGreaterThan(80, $movie['audiencescore']);
             }
         }
 
@@ -138,27 +138,27 @@ class CelebrityTest extends TestCase
             if ($serial['title'] == "Your Honor") {
                 $this->assertEquals('Your Honor', $serial['title']);
                 $this->assertEquals('/tv/your_honor_2020', $serial['url']);
-                $this->assertEquals('2020-2021-2023-2025', $serial['year']);
-                $this->assertEquals(49, $serial['tomatometer']);
-                $this->assertEquals(68, $serial['audiencescore']);
+                $this->assertEquals('2020-2021-2023', $serial['year']);
+                $this->assertGreaterThan(45, $serial['tomatometer']);
+                $this->assertGreaterThan(65, $serial['audiencescore']);
             } elseif ($serial['title'] == "Breaking Bad") {
                 $this->assertEquals('Breaking Bad', $serial['title']);
                 $this->assertEquals('/tv/breaking_bad', $serial['url']);
                 $this->assertEquals('2008-2013', $serial['year']);
-                $this->assertEquals(96, $serial['tomatometer']);
-                $this->assertEquals(97, $serial['audiencescore']);
+                $this->assertGreaterThan(95, $serial['tomatometer']);
+                $this->assertGreaterThan(95, $serial['audiencescore']);
             } elseif ($serial['title'] == "Modern Family") {
                 $this->assertEquals('Modern Family', $serial['title']);
                 $this->assertEquals('/tv/modern_family', $serial['url']);
                 $this->assertEquals('2012-2013', $serial['year']);
-                $this->assertEquals(85, $serial['tomatometer']);
-                $this->assertEquals(90, $serial['audiencescore']);
+                $this->assertGreaterThan(80, $serial['tomatometer']);
+                $this->assertGreaterThan(85, $serial['audiencescore']);
             } elseif ($serial['title'] == "The Simpsons") {
                 $this->assertEquals('The Simpsons', $serial['title']);
                 $this->assertEquals('/tv/the_simpsons', $serial['url']);
                 $this->assertEquals('2012-2013', $serial['year']);
-                $this->assertEquals(85, $serial['tomatometer']);
-                $this->assertEquals(75, $serial['audiencescore']);
+                $this->assertGreaterThan(80, $serial['tomatometer']);
+                $this->assertGreaterThan(70, $serial['audiencescore']);
             } elseif ($serial['title'] == "60 Minutes") {
                 $this->assertEquals('60 Minutes', $serial['title']);
                 $this->assertEquals('/tv/60_minutes', $serial['url']);

@@ -153,24 +153,15 @@ class Rottentomatoes extends Base
 
                     // cast
                     try {
-                        // find emsId and load cast and crew from api
-                        $castAndCrewDataJson = json_decode($html->find("#castAndCrewData", 0)->innerText());
-
-                        if (!empty($castAndCrewDataJson) and !empty($castAndCrewDataJson->emsId)) {
-                            if ($type == "tv") {
-                                $apiType = "TvSeries";
-                            } else {
-                                $apiType = "Movie";
-                            }
-                            $responseCastAndCrewData = $this->getContentPage($this->baseUrl . "/cnapi/modules/cast-and-crew/" . $apiType . "/" . $castAndCrewDataJson->emsId);
-
-                            $responseJson = json_decode($responseCastAndCrewData);
-                            if ($responseJson->contentData->people) {
-                                foreach ($responseJson->contentData->people as $e) {
-                                    $url = $e->celebrityUrl;
+                        $response = $this->getContentPage($this->baseUrl . $url . '/cast-and-crew');
+                        if (!empty($response)) {
+                            $html = HtmlDomParser::str_get_html($response);
+                            if ($html->findOneOrFalse('cast-and-crew-card')) {
+                                foreach ($html->find('cast-and-crew-card') as $e) {
+                                    $url = $e->getAttribute('mediaurl');
                                     $url_slug = str_replace("/celebrity/", "", $url);
-                                    $name = $e->name;
-                                    $thumbnail = $e->primaryImageUrl;
+                                    $name = $e->find('[slot="title"]', 0)->plaintext;
+                                    $thumbnail = $e->find('[slot="poster"]', 0)->getAttribute('src');
                                     if (!$thumbnail) {
                                         $thumbnail = null;
                                     }
@@ -189,36 +180,6 @@ class Rottentomatoes extends Base
                     } catch (\Exception $e) {
                     }
 
-                    if (empty($output['cast'])) {
-                        try {
-                            $castAndCrewDataJson = json_decode($html->find("#castAndCrewData", 0)->innerText());
-
-                            if ($castAndCrewDataJson->people) {
-                                foreach ($castAndCrewDataJson->people as $e) {
-                                    $url = $e->celebrityUrl;
-                                    $url_slug = str_replace("/celebrity/", "", $url);
-                                    $name = $e->name;
-                                    $thumbnail = $e->primaryImageUrl;
-                                    if (empty($thumbnail)
-                                        or strpos($thumbnail, 'poster_default_thumbnail') !== false
-                                        or strpos($thumbnail, 'poster-default-thumbnail') !== false) {
-                                        $thumbnail = null;
-                                    }
-
-                                    if (!empty($url_slug) and !empty($name) and $url_slug != "undefined" and $url_slug != "null") {
-                                        $output['cast'][] = [
-                                            'name' => $this->cleanString($name),
-                                            'full_url' => $this->baseUrl . $this->cleanString($url),
-                                            'url_slug' => $this->cleanString($url_slug),
-                                            'thumbnail' => $this->cleanString($thumbnail)
-                                        ];
-                                    }
-                                }
-                            }
-                        } catch (Exception $exception) {
-
-                        }
-                    }
                 }
             }
         }
