@@ -7,8 +7,9 @@ class ExtractTest extends TestCase
 {
     public function testExtractMovie()
     {
-        $search = new Rottentomatoes();
-        $result = $search->extract('/m/matrix');
+        $rottenTomatoes = new Rottentomatoes();
+        $result = $rottenTomatoes->extract('/m/matrix');
+
         $this->assertIsArray($result);
         $this->assertCount(10, $result['result']);
 
@@ -35,8 +36,9 @@ class ExtractTest extends TestCase
 
     public function testExtractTV()
     {
-        $search = new Rottentomatoes();
-        $result = $search->extract('/tv/breaking_bad');
+        $rottenTomatoes = new Rottentomatoes();
+        $result = $rottenTomatoes->extract('/tv/breaking_bad');
+
         $this->assertIsArray($result);
         $this->assertCount(10, $result['result']);
 
@@ -63,8 +65,8 @@ class ExtractTest extends TestCase
 
     public function testExtractNotFound()
     {
-        $search = new Rottentomatoes();
-        $result = $search->extract('/m/page_not_found');
+        $rottenTomatoes = new Rottentomatoes();
+        $result = $rottenTomatoes->extract('/m/page_not_found');
 
         $this->assertIsArray($result);
         $this->assertEmpty($result['result']);
@@ -73,8 +75,8 @@ class ExtractTest extends TestCase
 
     public function testExtractRedirect()
     {
-        $search = new Rottentomatoes();
-        $result = $search->extract('/tv/that_s_so_raven');
+        $rottenTomatoes = new Rottentomatoes();
+        $result = $rottenTomatoes->extract('/tv/that_s_so_raven');
 
         $this->assertIsArray($result);
         $this->assertEmpty($result['result']);

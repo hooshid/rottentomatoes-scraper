@@ -7,8 +7,9 @@ class SearchTest extends TestCase
 {
     public function testSearchMovie()
     {
-        $search = new Rottentomatoes();
-        $result = $search->search('Spider-Man: Far From Home', 'movie');
+        $rottenTomatoes = new Rottentomatoes();
+        $result = $rottenTomatoes->search('Spider-Man: Far From Home', 'movie');
+
         $this->assertIsArray($result);
         $this->assertCount(1, $result['result']);
         $this->assertCount(7, $result['result'][0]);
@@ -24,8 +25,9 @@ class SearchTest extends TestCase
 
     public function testSearchMovieResultCount()
     {
-        $search = new Rottentomatoes();
-        $result = $search->search('Pirates of the Caribbean', 'movie');
+        $rottenTomatoes = new Rottentomatoes();
+        $result = $rottenTomatoes->search('Pirates of the Caribbean', 'movie');
+
         $this->assertIsArray($result);
         $this->assertCount(7, $result['result']);
         $this->assertCount(7, $result['result'][0]);
@@ -33,8 +35,9 @@ class SearchTest extends TestCase
 
     public function testSearchTV()
     {
-        $search = new Rottentomatoes();
-        $result = $search->search('Game of Thrones', 'tv');
+        $rottenTomatoes = new Rottentomatoes();
+        $result = $rottenTomatoes->search('Game of Thrones', 'tv');
+
         $this->assertIsArray($result);
         $this->assertCount(1, $result['result']);
         $this->assertCount(9, $result['result'][0]);
@@ -52,8 +55,9 @@ class SearchTest extends TestCase
 
     public function testSearchNotFound()
     {
-        $search = new Rottentomatoes();
-        $result = $search->search('mmmmmmmmm', 'movie');
+        $rottenTomatoes = new Rottentomatoes();
+        $result = $rottenTomatoes->search('mmmmmmmmm', 'movie');
+
         $this->assertIsArray($result);
         $this->assertCount(0, $result['result']);
     }
