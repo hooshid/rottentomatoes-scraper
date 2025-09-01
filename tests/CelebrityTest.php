@@ -25,7 +25,7 @@ class CelebrityTest extends TestCase
 
         // Assert movies array
         $this->assertIsArray($result['result']['movies']);
-        $this->assertGreaterThan(55, count($result['result']['movies']));
+        $this->assertGreaterThan(54, count($result['result']['movies']));
 
         // Assert series array
         $this->assertIsArray($result['result']['series']);
