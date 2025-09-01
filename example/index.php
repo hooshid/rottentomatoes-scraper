@@ -43,6 +43,7 @@
             <a href="/example/extract.php?url=/m/avatar">Movie: Avatar (2009)</a>
             <a href="/example/extract.php?url=/tv/game_of_thrones">TV Series: Game of Thrones</a>
             <a href="/example/extract.php?url=/tv/the_blacklist">TV Series: The Blacklist</a>
+            <a href="/example/celebrity.php?url=tom_cruise">Celebrity: Tom Cruise</a>
             <a href="/example/celebrity.php?url=johnny_depp">Celebrity: Johnny Depp</a>
             <a href="/example/celebrity.php?url=emma_watson">Celebrity: Emma Watson</a>
         </div>

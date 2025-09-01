@@ -7,31 +7,26 @@ class CelebrityTest extends TestCase
 {
     public function testCelebrityTomCruise()
     {
-        $search = new Rottentomatoes();
-        $result = $search->celebrity('tom_cruise');
+        $rottenTomatoes = new Rottentomatoes();
+        $result = $rottenTomatoes->celebrity('tom_cruise');
 
-        // Assert the overall structure
         $this->assertIsArray($result);
         $this->assertCount(6, $result['result']);
         $this->assertArrayHasKey('result', $result);
         $this->assertArrayHasKey('error', $result);
         $this->assertNull($result['error']);
 
-        // Assert celebrity details
         $this->assertEquals('Tom Cruise', $result['result']['name']);
         $this->assertEquals('https://www.rottentomatoes.com/celebrity/tom_cruise', $result['result']['full_url']);
         $this->assertEquals('tom_cruise', $result['result']['url_slug']);
         $this->assertEquals('https://resizing.flixster.com/aKZD0ZOIIhT1YuBxFNJxe20iqYM=/218x280/v2/https://resizing.flixster.com/vpi-xtSdBvad3lgHJ9aMFwnZXNo=/ems.cHJkLWVtcy1hc3NldHMvY2VsZWJyaXRpZXMvMmYxODg5MzMtODE3MS00ZTI2LThmYmYtZGVmMzE4MmI3MjRiLmpwZw==', $result['result']['thumbnail']);
 
-        // Assert movies array
         $this->assertIsArray($result['result']['movies']);
-        $this->assertGreaterThan(54, count($result['result']['movies']));
+        $this->assertGreaterThanOrEqual(55, count($result['result']['movies']));
 
-        // Assert series array
         $this->assertIsArray($result['result']['series']);
         $this->assertGreaterThan(10, count($result['result']['series']));
 
-        // Test specific movie data
         foreach ($result['result']['movies'] as $movie) {
             if ($movie['title'] == "Mission: Impossible - Dead Reckoning Part One") {
                 $this->assertEquals('Mission: Impossible - Dead Reckoning Part One', $movie['title']);
@@ -66,7 +61,6 @@ class CelebrityTest extends TestCase
             }
         }
 
-        // Test specific series data
         foreach ($result['result']['series'] as $serial) {
             if ($serial['title'] == "Top Gear") {
                 $this->assertEquals('Top Gear', $serial['title']);
@@ -86,31 +80,26 @@ class CelebrityTest extends TestCase
 
     public function testCelebrityBryanCranston()
     {
-        $search = new Rottentomatoes();
-        $result = $search->celebrity('bryan_cranston');
+        $rottenTomatoes = new Rottentomatoes();
+        $result = $rottenTomatoes->celebrity('bryan_cranston');
 
-        // Assert the overall structure
         $this->assertIsArray($result);
         $this->assertCount(6, $result['result']);
         $this->assertArrayHasKey('result', $result);
         $this->assertArrayHasKey('error', $result);
         $this->assertNull($result['error']);
 
-        // Assert celebrity details
         $this->assertEquals('Bryan Cranston', $result['result']['name']);
         $this->assertEquals('https://www.rottentomatoes.com/celebrity/bryan_cranston', $result['result']['full_url']);
         $this->assertEquals('bryan_cranston', $result['result']['url_slug']);
         $this->assertEquals('https://resizing.flixster.com/kEIv62-pIv0_YmbAF8969V05VIs=/218x280/v2/https://resizing.flixster.com/-XZAfHZM39UwaGJIFWKAE8fS0ak=/v3/t/assets/164311_v9_bc.jpg', $result['result']['thumbnail']);
 
-        // Assert movies array
         $this->assertIsArray($result['result']['movies']);
         $this->assertGreaterThan(60, count($result['result']['movies']));
 
-        // Assert series array
         $this->assertIsArray($result['result']['series']);
         $this->assertGreaterThan(79, count($result['result']['series']));
 
-        // Test specific movie data
         foreach ($result['result']['movies'] as $movie) {
             if ($movie['title'] == "Kung Fu Panda 4") {
                 $this->assertEquals('Kung Fu Panda 4', $movie['title']);
@@ -133,7 +122,6 @@ class CelebrityTest extends TestCase
             }
         }
 
-        // Test specific series data
         foreach ($result['result']['series'] as $serial) {
             if ($serial['title'] == "Your Honor") {
                 $this->assertEquals('Your Honor', $serial['title']);
@@ -169,23 +157,46 @@ class CelebrityTest extends TestCase
         }
     }
 
-    public function testCelebrityNoSeries()
+    public function testCelebrityNoMovies()
     {
-        $search = new Rottentomatoes();
-        $result = $search->celebrity('gore_verbinski');
+        // Reserve names:
+        // candice_patton
+        // lauren_bushnell
+        // lauren_patton
+        // gaia_girace
+        // lusi_zhao
+        // marouane_zotti
+        $rottenTomatoes = new Rottentomatoes();
+        $result = $rottenTomatoes->celebrity('nava_mau');
 
-        // Assert the overall structure
         $this->assertIsArray($result);
         $this->assertCount(6, $result['result']);
         $this->assertArrayHasKey('result', $result);
         $this->assertArrayHasKey('error', $result);
         $this->assertNull($result['error']);
 
-        // Assert movies array
+        $this->assertIsArray($result['result']['movies']);
+        $this->assertCount(0, $result['result']['movies']);
+        $this->assertEmpty($result['result']['movies']);
+
+        $this->assertIsArray($result['result']['series']);
+        $this->assertGreaterThan(1, count($result['result']['series']));
+    }
+
+    public function testCelebrityNoSeries()
+    {
+        $rottenTomatoes = new Rottentomatoes();
+        $result = $rottenTomatoes->celebrity('gore_verbinski');
+
+        $this->assertIsArray($result);
+        $this->assertCount(6, $result['result']);
+        $this->assertArrayHasKey('result', $result);
+        $this->assertArrayHasKey('error', $result);
+        $this->assertNull($result['error']);
+
         $this->assertIsArray($result['result']['movies']);
         $this->assertGreaterThan(10, count($result['result']['movies']));
 
-        // Assert series array
         $this->assertIsArray($result['result']['series']);
         $this->assertCount(0, $result['result']['series']);
         $this->assertEmpty($result['result']['series']);
@@ -193,8 +204,8 @@ class CelebrityTest extends TestCase
 
     public function testCelebrityBranislavLecic()
     {
-        $search = new Rottentomatoes();
-        $result = $search->celebrity('branislav_lecic');
+        $rottenTomatoes = new Rottentomatoes();
+        $result = $rottenTomatoes->celebrity('branislav_lecic');
 
         $this->assertIsArray($result);
         $this->assertEmpty($result['result']);
@@ -203,8 +214,8 @@ class CelebrityTest extends TestCase
 
     public function testCelebrityNotFound()
     {
-        $search = new Rottentomatoes();
-        $result = $search->celebrity('page_not_found');
+        $rottenTomatoes = new Rottentomatoes();
+        $result = $rottenTomatoes->celebrity('page_not_found');
 
         $this->assertIsArray($result);
         $this->assertEmpty($result['result']);
@@ -213,8 +224,8 @@ class CelebrityTest extends TestCase
 
     public function testCelebrityInFinished()
     {
-        $search = new Rottentomatoes();
-        $result = $search->celebrity('bruce_meyers');
+        $rottenTomatoes = new Rottentomatoes();
+        $result = $rottenTomatoes->celebrity('bruce_meyers');
 
         $this->assertIsArray($result);
         $this->assertEmpty($result['result']);

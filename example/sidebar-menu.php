@@ -6,6 +6,7 @@
 <a href="extract.php?url=/m/avatar">Avatar (2009)</a>
 
 <div class="menu-links-title">TV</div>
+<a href="extract.php?url=/tv/the_last_of_us">The Last of Us</a>
 <a href="extract.php?url=/tv/game_of_thrones">Game of Thrones</a>
 <a href="extract.php?url=/tv/breaking_bad">Breaking Bad</a>
 <a href="extract.php?url=/tv/the_blacklist">The Blacklist</a>
