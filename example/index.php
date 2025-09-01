@@ -41,8 +41,10 @@
         <div class="menu-links">
             <a href="/example/extract.php?url=/m/matrix">Movie: The Matrix (1999)</a>
             <a href="/example/extract.php?url=/m/avatar">Movie: Avatar (2009)</a>
+            <a href="/example/extract.php?url=/m/superman_2025">Movie: Superman (2025)</a>
             <a href="/example/extract.php?url=/tv/game_of_thrones">TV Series: Game of Thrones</a>
             <a href="/example/extract.php?url=/tv/the_blacklist">TV Series: The Blacklist</a>
+            <a href="/example/extract.php?url=/tv/peacemaker_2022">TV Series: Peacemaker</a>
             <a href="/example/celebrity.php?url=tom_cruise">Celebrity: Tom Cruise</a>
             <a href="/example/celebrity.php?url=johnny_depp">Celebrity: Johnny Depp</a>
             <a href="/example/celebrity.php?url=emma_watson">Celebrity: Emma Watson</a>
