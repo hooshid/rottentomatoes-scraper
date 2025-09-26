@@ -158,7 +158,7 @@ class Rottentomatoes extends Base
                             $html = HtmlDomParser::str_get_html($response);
                             if ($html->findOneOrFalse('cast-and-crew-card')) {
                                 foreach ($html->find('cast-and-crew-card') as $e) {
-                                    $url = $e->getAttribute('mediaurl');
+                                    $url = $e->getAttribute('media-url');
                                     $url_slug = str_replace("/celebrity/", "", $url);
                                     $name = $e->find('[slot="title"]', 0)->plaintext;
                                     $thumbnail = $e->find('[slot="poster"]', 0)->getAttribute('src');
