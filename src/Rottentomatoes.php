@@ -8,21 +8,22 @@ use voku\helper\HtmlDomParser;
 
 class Rottentomatoes extends Base
 {
-    protected $baseUrl = 'https://www.rottentomatoes.com';
+    protected string $baseUrl = 'https://www.rottentomatoes.com';
 
-    protected $searchTypes = ['movie', 'tv'];
+    protected array $searchTypes = ['movie', 'tv'];
 
     /**
      * Search on rottentomatoes
      *
-     * @param $search
-     * @param $type
-     * @return array|string
+     * @param string $search
+     * @param string $type
+     * @return array
+     * @throws Exception
      */
-    public function search($search, $type)
+    public function search(string $search, string $type): array
     {
         if (!in_array($type, $this->searchTypes)) {
-            return 'Type can be one of this: ' . implode(", ", $this->searchTypes);
+            throw new Exception("Type can be one of: " . implode(", ", $this->searchTypes));
         }
 
         // fix typos
@@ -93,10 +94,10 @@ class Rottentomatoes extends Base
     /**
      * Extract data from movie or tv page
      *
-     * @param $url
+     * @param string $url
      * @return array
      */
-    public function extract($url): array
+    public function extract(string $url): array
     {
         $output = [];
         $error = null;
@@ -113,7 +114,7 @@ class Rottentomatoes extends Base
 
             if ($this->cleanString($html->find('h1', 0)->innerText()) == "404 - Not Found") {
                 $error = 404; // not found
-            } elseif (strpos($response, 'Moved Permanently. Redirecting to') !== false) {
+            } elseif (str_contains($response, 'Moved Permanently. Redirecting to')) {
                 $error = 301; // redirect
             }
 
@@ -193,10 +194,10 @@ class Rottentomatoes extends Base
     /**
      * Extract data from celebrity page
      *
-     * @param $url
+     * @param string $url
      * @return array
      */
-    public function celebrity($url): array
+    public function celebrity(string $url): array
     {
         $output = [];
         $error = null;
@@ -208,7 +209,7 @@ class Rottentomatoes extends Base
 
             if ($this->cleanString($html->find('h1', 0)->innerText()) == "404 - Not Found") {
                 $error = 404; // not found
-            } elseif (strpos($response, 'Moved Permanently. Redirecting to') !== false) {
+            } elseif (str_contains($response, 'Moved Permanently. Redirecting to')) {
                 $error = 301; // redirect
             }
 

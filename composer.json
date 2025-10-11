@@ -29,7 +29,7 @@
     "minimum-stability": "dev",
     "prefer-stable": true,
     "require": {
-        "php": ">=7.3",
+        "php": ">=8.0",
         "ext-curl": "*",
         "ext-json": "*",
         "voku/simple_html_dom": "^4.8"

@@ -11,7 +11,7 @@ Using this Rottentomatoes API, you are able to search, browse and extract data o
 This library scrapes rottentomatoes.com so changes their site can cause parts of this library to fail. You will probably need to update a few times a year.
 
 ### Requirements
-* PHP >= 7.3
+* PHP >= 8.0
 * PHP cURL extension
 
 ### Install via composer

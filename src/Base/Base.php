@@ -7,10 +7,10 @@ class Base
     /**
      * Get html content
      *
-     * @param $url
+     * @param string $url
      * @return bool|string
      */
-    protected function getContentPage($url)
+    protected function getContentPage(string $url): bool|string
     {
         $ch = curl_init($url);
         curl_setopt($ch, CURLOPT_ENCODING, "");
@@ -33,15 +33,16 @@ class Base
     /**
      * Clean string from html tags
      *
-     * @param $str
-     * @param null $remove
+     * @param string|null $str
+     * @param string|null $remove
      * @return string|null
      */
-    protected function cleanString($str, $remove = null): ?string
+    protected function cleanString(?string $str, ?string $remove = null): ?string
     {
         if (empty($str)) {
             return null;
         }
+
         if (!empty($remove)) {
             $str = str_replace($remove, "", $str);
         }
@@ -63,7 +64,7 @@ class Base
     /**
      * @return mixed|null
      */
-    protected function jsonLD($html)
+    protected function jsonLD(?string $html): mixed
     {
         if (empty($html)) {
             return [];
@@ -81,11 +82,11 @@ class Base
     /**
      * get value after last specific char
      *
-     * @param $str
+     * @param string $str
      * @param string $needle
      * @return string
      */
-    protected function afterLast($str, string $needle = '/'): string
+    protected function afterLast(string $str, string $needle = '/'): string
     {
         return substr($str, strrpos($str, $needle) + 1);
     }
@@ -93,10 +94,10 @@ class Base
     /**
      * extract numbers from string
      *
-     * @param $str
+     * @param string $str
      * @return int
      */
-    protected function getNumbers($str): int
+    protected function getNumbers(string $str): int
     {
         return (int)filter_var($str, FILTER_SANITIZE_NUMBER_INT);
     }
