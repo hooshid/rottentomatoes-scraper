@@ -42,8 +42,8 @@ class Rottentomatoes extends Base
                         $title = $e->find('[data-qa="info-name"]', 0)->text();
                         $url = $e->find('[data-qa="info-name"]', 0)->getAttribute('href');
                         $thumbnail = $e->find('img', 0)->getAttribute('src');
-                        $releaseYear = $e->find('search-page-media-row', 0)->getAttribute('releaseyear');
-                        $score = $e->find('search-page-media-row', 0)->getAttribute('tomatometerscore');
+                        $releaseYear = $e->find('search-page-media-row', 0)->getAttribute('release-year');
+                        $score = $e->find('search-page-media-row', 0)->getAttribute('tomatometer-score');
 
                         if (!empty($title) and !empty($url)) {
                             $output[] = [
