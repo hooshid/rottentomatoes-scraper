@@ -6,7 +6,6 @@ use Exception;
 use Hooshid\RottentomatoesScraper\Base\Base;
 use voku\helper\HtmlDomParser;
 
-
 class Rottentomatoes extends Base
 {
     protected string $baseUrl = 'https://www.rottentomatoes.com';
