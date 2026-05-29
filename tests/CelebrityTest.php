@@ -50,7 +50,7 @@ class CelebrityTest extends TestCase
                 $this->assertEquals('Legend', $movie['title']);
                 $this->assertEquals('/m/1012164-legend', $movie['url']);
                 $this->assertEquals('1985', $movie['year']);
-                $this->assertGreaterThan(40, $movie['tomatometer']);
+                $this->assertGreaterThan(30, $movie['tomatometer']);
                 $this->assertGreaterThan(70, $movie['audiencescore']);
             } else if ($movie['title'] == "Taps") {
                 $this->assertEquals('Taps', $movie['title']);

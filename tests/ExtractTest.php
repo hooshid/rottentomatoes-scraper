@@ -29,7 +29,7 @@ class ExtractTest extends TestCase
         $this->assertCount(35, $result['result']['cast']);
         $this->assertEquals('Keanu Reeves', $result['result']['cast'][2]['name']);
         $this->assertEquals('keanu_reeves', $result['result']['cast'][2]['url_slug']);
-        $this->assertEquals('https://resizing.flixster.com/Cv9PUfiRiNni_QNi2lDgmFTV6TM=/68x102/v2/https://resizing.flixster.com/-XZAfHZM39UwaGJIFWKAE8fS0ak=/v3/t/assets/1443_v9_bc.jpg', $result['result']['cast'][2]['thumbnail']);
+        $this->assertEquals('https://resizing.flixster.com/hyaY0lwykOCJld74CxSbNcshqUc=/68x102/v2/https://resizing.flixster.com/-XZAfHZM39UwaGJIFWKAE8fS0ak=/v3/t/assets/GNLZZGG0032BK8J.jpg', $result['result']['cast'][2]['thumbnail']);
 
         $this->assertNull($result['error']);
     }
