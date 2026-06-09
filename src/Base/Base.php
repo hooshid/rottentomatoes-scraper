@@ -4,6 +4,25 @@ namespace Hooshid\RottentomatoesScraper\Base;
 
 class Base
 {
+    protected array $searchTypes = ['movie', 'tv'];
+    protected string $baseUrl;
+    protected string $userAgent;
+    protected int $timeout;
+    protected ?string $proxy;
+
+    public function __construct(
+        string  $baseUrl = "https://www.rottentomatoes.com",
+        string  $userAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36",
+        int     $timeout = 30,
+        ?string $proxy = null
+    )
+    {
+        $this->baseUrl = $baseUrl;
+        $this->userAgent = $userAgent;
+        $this->timeout = $timeout;
+        $this->proxy = $proxy;
+    }
+
     /**
      * Get html content
      *
@@ -14,20 +33,53 @@ class Base
     {
         $ch = curl_init($url);
         curl_setopt($ch, CURLOPT_ENCODING, "");
+        curl_setopt($ch, CURLOPT_TIMEOUT, $this->timeout);
+        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, $this->timeout);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        //curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+        curl_setopt($ch, CURLOPT_USERAGENT, $this->userAgent);
         curl_setopt($ch, CURLOPT_REFERER, "https://www.rottentomatoes.com/");
+        //$requestHeaders = array();
+        //$requestHeaders[] = "accept: */*";
+        //$requestHeaders[] = "accept-encoding: gzip, deflate, br";
+        //$requestHeaders[] = "accept-language: en-US,en;";
+        //curl_setopt($ch, CURLOPT_HTTPHEADER, $requestHeaders);
 
-        $requestHeaders = array();
-        $requestHeaders[] = "accept: */*";
-        $requestHeaders[] = "accept-encoding: gzip, deflate, br";
-        $requestHeaders[] = "accept-language: en-US,en;";
-        curl_setopt($ch, CURLOPT_HTTPHEADER, $requestHeaders);
+        if ($this->proxy) {
+            $proxy = parse_url($this->proxy);
 
-        curl_setopt($ch, CURLOPT_USERAGENT, "spider");
-        $page = curl_exec($ch);
-        curl_close($ch);
+            curl_setopt(
+                $ch,
+                CURLOPT_PROXY,
+                $proxy['host'] . ':' . $proxy['port']
+            );
 
-        return $page;
+            if (isset($proxy['user'])) {
+                curl_setopt(
+                    $ch,
+                    CURLOPT_PROXYUSERPWD,
+                    $proxy['user'] . ':' . ($proxy['pass'] ?? '')
+                );
+            }
+
+            switch ($proxy['scheme'] ?? '') {
+                case 'socks5':
+                    curl_setopt($ch, CURLOPT_PROXYTYPE, CURLPROXY_SOCKS5);
+                    break;
+
+                case 'socks5h':
+                    curl_setopt($ch, CURLOPT_PROXYTYPE, CURLPROXY_SOCKS5_HOSTNAME);
+                    break;
+
+                case 'http':
+                case 'https':
+                default:
+                    curl_setopt($ch, CURLOPT_PROXYTYPE, CURLPROXY_HTTP);
+                    break;
+            }
+        }
+
+        return curl_exec($ch);
     }
 
     /**

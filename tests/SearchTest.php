@@ -44,7 +44,7 @@ class SearchTest extends TestCase
 
         $this->assertEquals('https://www.rottentomatoes.com/tv/game_of_thrones', $result['result'][0]['full_url']);
         $this->assertEquals('game_of_thrones', $result['result'][0]['url_slug']);
-        $this->assertEquals('https://resizing.flixster.com/kXSybtJvZlV6mXrfqhmerZwlIaA=/fit-in/80x126/v2/https://resizing.flixster.com/-XZAfHZM39UwaGJIFWKAE8fS0ak=/v3/t/assets/p8553063_b_v13_ax.jpg', $result['result'][0]['thumbnail']);
+        $this->assertEquals('https://resizing.flixster.com/aYXTllkKQZ2C8O9EdW9F6xEYKfA=/fit-in/80x126/v2/https://resizing.flixster.com/-XZAfHZM39UwaGJIFWKAE8fS0ak=/v3/t/assets/p8553063_b_v12_ax.jpg', $result['result'][0]['thumbnail']);
         $this->assertEquals('tv', $result['result'][0]['type']);
         $this->assertEquals('Game of Thrones', $result['result'][0]['title']);
         $this->assertEquals(2011, $result['result'][0]['year']);

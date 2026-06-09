@@ -8,11 +8,6 @@ use voku\helper\HtmlDomParser;
 
 class Rottentomatoes extends Base
 {
-    protected string $baseUrl = 'https://www.rottentomatoes.com';
-
-    
-    protected array $searchTypes = ['movie', 'tv'];
-
     /**
      * Search on rottentomatoes
      *
@@ -142,7 +137,7 @@ class Rottentomatoes extends Base
                         $output['votes'] = isset($scoreDetailsJson->criticsScore->reviewCount) ? (int)$scoreDetailsJson->criticsScore->reviewCount : null;
                         $output['user_score'] = isset($scoreDetailsJson->audienceScore->score) ? (int)$scoreDetailsJson->audienceScore->score : null;
                         if ($type == "tv") {
-                            $output['user_votes'] = $this->getNumbers($scoreDetailsJson->audienceScore->bandedRatingCount);
+                            $output['user_votes'] = isset($scoreDetailsJson->audienceScore->bandedRatingCount) ? $this->getNumbers($scoreDetailsJson->audienceScore->bandedRatingCount) : null;
                         } else {
                             $output['user_votes'] = isset($scoreDetailsJson->audienceScore->reviewCount) ? (int)$scoreDetailsJson->audienceScore->reviewCount : null;
                         }
