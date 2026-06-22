@@ -27,59 +27,72 @@ class Base
      * Get html content
      *
      * @param string $url
+     * @param int $retryCount
      * @return bool|string
      */
-    protected function getContentPage(string $url): bool|string
+    protected function getContentPage(string $url, int $retryCount = 1): bool|string
     {
-        $ch = curl_init($url);
-        curl_setopt($ch, CURLOPT_ENCODING, "");
-        curl_setopt($ch, CURLOPT_TIMEOUT, $this->timeout);
-        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, $this->timeout);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        //curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
-        curl_setopt($ch, CURLOPT_USERAGENT, $this->userAgent);
-        curl_setopt($ch, CURLOPT_REFERER, "https://www.rottentomatoes.com/");
-        //$requestHeaders = array();
-        //$requestHeaders[] = "accept: */*";
-        //$requestHeaders[] = "accept-encoding: gzip, deflate, br";
-        //$requestHeaders[] = "accept-language: en-US,en;";
-        //curl_setopt($ch, CURLOPT_HTTPHEADER, $requestHeaders);
+        $attempt = 0;
 
-        if ($this->proxy) {
-            $proxy = parse_url($this->proxy);
+        do {
+            $attempt++;
 
-            curl_setopt(
-                $ch,
-                CURLOPT_PROXY,
-                $proxy['host'] . ':' . $proxy['port']
-            );
+            $ch = curl_init($url);
+            curl_setopt($ch, CURLOPT_ENCODING, "");
+            curl_setopt($ch, CURLOPT_TIMEOUT, $this->timeout);
+            curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, $this->timeout);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($ch, CURLOPT_USERAGENT, $this->userAgent);
+            curl_setopt($ch, CURLOPT_REFERER, "https://www.rottentomatoes.com/");
 
-            if (isset($proxy['user'])) {
+            if ($this->proxy) {
+                $proxy = parse_url($this->proxy);
+
                 curl_setopt(
                     $ch,
-                    CURLOPT_PROXYUSERPWD,
-                    $proxy['user'] . ':' . ($proxy['pass'] ?? '')
+                    CURLOPT_PROXY,
+                    $proxy['host'] . ':' . $proxy['port']
                 );
+
+                if (isset($proxy['user'])) {
+                    curl_setopt(
+                        $ch,
+                        CURLOPT_PROXYUSERPWD,
+                        $proxy['user'] . ':' . ($proxy['pass'] ?? '')
+                    );
+                }
+
+                switch ($proxy['scheme'] ?? '') {
+                    case 'socks5':
+                        curl_setopt($ch, CURLOPT_PROXYTYPE, CURLPROXY_SOCKS5);
+                        break;
+
+                    case 'socks5h':
+                        curl_setopt($ch, CURLOPT_PROXYTYPE, CURLPROXY_SOCKS5_HOSTNAME);
+                        break;
+
+                    case 'http':
+                    case 'https':
+                    default:
+                        curl_setopt($ch, CURLOPT_PROXYTYPE, CURLPROXY_HTTP);
+                        break;
+                }
             }
 
-            switch ($proxy['scheme'] ?? '') {
-                case 'socks5':
-                    curl_setopt($ch, CURLOPT_PROXYTYPE, CURLPROXY_SOCKS5);
-                    break;
+            $result = curl_exec($ch);
+            $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 
-                case 'socks5h':
-                    curl_setopt($ch, CURLOPT_PROXYTYPE, CURLPROXY_SOCKS5_HOSTNAME);
-                    break;
-
-                case 'http':
-                case 'https':
-                default:
-                    curl_setopt($ch, CURLOPT_PROXYTYPE, CURLPROXY_HTTP);
-                    break;
+            if ($result !== false && $httpCode >= 200 && $httpCode < 300) {
+                return $result;
             }
-        }
 
-        return curl_exec($ch);
+            if ($attempt < $retryCount) {
+                sleep(5);
+            }
+
+        } while ($attempt < $retryCount);
+
+        return false;
     }
 
     /**

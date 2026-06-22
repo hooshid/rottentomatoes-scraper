@@ -150,7 +150,7 @@ class Rottentomatoes extends Base
 
                     // cast
                     try {
-                        $response = $this->getContentPage($this->baseUrl . $url . '/cast-and-crew');
+                        $response = $this->getContentPage($this->baseUrl . $url . '/cast-and-crew', 2);
                         if (!empty($response)) {
                             $html = HtmlDomParser::str_get_html($response);
                             if ($html->findOneOrFalse('cast-and-crew-card')) {
@@ -234,7 +234,7 @@ class Rottentomatoes extends Base
                     $output['movies'] = [];
                     $output['series'] = [];
                     if ($emsId != null) {
-                        $getMovies = $this->getContentPage($this->baseUrl . "/cnapi/modules/filmography/$emsId/movie/newest?pageCount=500");
+                        $getMovies = $this->getContentPage($this->baseUrl . "/cnapi/modules/filmography/$emsId/movie/newest?pageCount=500", 3);
                         $data = json_decode($getMovies, true);
                         if (isset($data['media']) && is_array($data['media'])) {
                             foreach ($data['media'] as $media) {
@@ -259,7 +259,7 @@ class Rottentomatoes extends Base
                         }
 
 
-                        $getSeries = $this->getContentPage($this->baseUrl . "/cnapi/modules/filmography/$emsId/tv/newest?pageCount=500");
+                        $getSeries = $this->getContentPage($this->baseUrl . "/cnapi/modules/filmography/$emsId/tv/newest?pageCount=500", 3);
                         $data = json_decode($getSeries, true);
                         if (isset($data['media']) && is_array($data['media'])) {
                             foreach ($data['media'] as $media) {
