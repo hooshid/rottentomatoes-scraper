@@ -82,6 +82,10 @@ class Base
             $result = curl_exec($ch);
             $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 
+            if ($httpCode == 301 || $httpCode == 404) {
+                return $result;
+            }
+
             if ($result !== false && $httpCode >= 200 && $httpCode < 300) {
                 return $result;
             }
